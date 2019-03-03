@@ -2,7 +2,8 @@
 we are happy devloping
 
 # 버전 정보
-Vue cli는 3+ 입니다.  
+Vue cli는 v3+ 입니다. 
+D3.js v4입니다. 
 
 # D3JS
 D3.js를 공부하는 방입니다. 
