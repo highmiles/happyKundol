@@ -94,3 +94,23 @@ makeCakeLater()
 이렇게 클로저를 이용하면 렉시컬 환경이 끝나면 GC가 회수해야 하지만 그렇지 않게 만들 수 있습니다. 
 함수로 래핑하여 flavor이라는 인자를 참조하여 쓸 수 있습니다.
 
+## 호이스팅
+```
+var arr = [1, 2, 3, 4]
+function a(){
+    function b(val){
+        i = 10
+        console.log(i)
+        return val * i
+    }
+    for(var i = 0; i < arr.length; i++){
+        arr[i] = b(arr[i])
+    }
+    return arr; 
+}
+console.log(a())
+//10
+//[ 10, 2, 3, 4 ]
+```
+반복문 안의 루프 카운터 i가 호이스팅이 되어 내부함수 b의 클로저에 포함이 됩니다. 이 때 i를 변경해서 루프카운터까지 변경되게 되어서
+꼬이게 됩니다. 
