@@ -11,3 +11,5 @@ function a(){
     return arr; 
 }
 console.log(a())
+//10
+//[ 10, 2, 3, 4 ]
