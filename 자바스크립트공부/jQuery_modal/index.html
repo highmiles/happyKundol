@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="./jquery.dialog.js"></script>
+    <link rel="stylesheet" href="dialog.css">
+    <script>
+        window.onload = () => {
+            $('#stacked').click(function () { 
+                $.dialog({
+                    title: 'Dialog #1',
+                    show: true,
+                    modal: true,
+                    width: 500,
+                    height: 500,
+                    footer: $('<div/>')
+                        .addClass('dialog-button')
+                        .attr('data-dialog-action', 'hide')
+                        .text('Close'),
+                    body: $('<button/>').text('Launch another dialog').click(function () {
+                        $.dialog({
+                            title: 'Dialog #2',
+                            show: true,
+                            modal: true,
+                            width: 400,
+                            height: 400,
+                            footer: $('<div/>')
+                                .addClass('dialog-button')
+                                .attr('data-dialog-action', 'hide')
+                                .text('Close'),
+                            body: $('<button/>').text('Launch yet another dialog')
+                                .click(
+                                    function () {
+                                        $.dialog({
+                                            title: 'Dialog #3',
+                                            width: 300,
+                                            height: 300,
+                                            show: true,
+                                            modal: true,
+                                            body: 'Oh hi there!',
+                                            footer: $('<div/>')
+                                                .addClass('dialog-button')
+                                                .attr('data-dialog-action',
+                                                    'hide')
+                                                .text('Close')
+                                        });
+                                    })
+                        });
+                    })
+                });
+            })
+
+        }
+    </script>
+
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="stacked">선택</div>
+</body>
+
+</html>
