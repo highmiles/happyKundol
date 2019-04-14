@@ -1,5 +1,9 @@
-(function (window, document, $) { 
-		const k_find = dom => document.querySelector(dom)  
+(function (window, document, $) {   
+
+		const k_add_class = (dom, cname) =>{
+			dom.classList.add(cname)
+			return dom;
+		} 
 		const k_append = (dom, appendDom) => {
 			appendDom.appendChild(dom)
 			return dom; 
@@ -73,7 +77,7 @@
 				this.$mask.addEventListener("click", function(e){ 
 					self.hide()
 				}) 
-				document.body.classList.add('dialog-no-scroll') 
+				document.body = k_add_class(document.body, 'dialog-no-scroll') 
 				this.$scrollContainer = k_append(k_create("div", "dialog-scroll-container"),document.body)  
 				this.$scrollContainer.addEventListener("click", e =>{
 					//console.log("스크롤 컨테이너에 접근했습니다 :", e.target, this, this.$scrollContainer)  
@@ -101,23 +105,7 @@
 				}
 				if (this.options.height) {
 					this.$dialog.style.minHeight = this.options.height 
-				} 
-				if (this.options.position) {
-					if (this.options.position.top) {
-						this.$dialog.style.marginTop = 'auto'; 
-						this.$dialog.style.top = this.options.position.top
-					}
-					if (this.options.position.left) { 
-						this.$dialog.style.marginLeft = 'auto'; 
-						this.$dialog.style.left = this.options.position.left 
-					}
-				}else{ 
-					this.$dialog.style.top = window.innerHeight / 2 - this.$dialog.style.minHeight / 2
-					this.$dialog.style.left = window.innerWidth / 2 - this.$dialog.style.minWidth / 2
-					console.log(this.$dialog.style.top)
-				}
-
-				console.log(this.$dialog)
+				}   
 				$header = k_create("div", 'dialog-header');
 	
 				if (this.options.title) {
@@ -133,18 +121,34 @@
 				$footer = k_create("div",'dialog-footer');     
 				$body = typeof body === 'string' ? k_setText($body, body) : k_append_HTML(body, $body)  
 				$footer = typeof this.options.footer === 'string' ? k_setText($footer, this.options.footer) : k_append_HTML(this.options.footer, $footer) 
+				
 				this.$dialog = k_appendTo($header, this.$dialog)
 				this.$dialog = k_appendTo($body, this.$dialog)
 				this.$dialog = k_appendTo($footer, this.$dialog)
 				this.$scrollContainer = k_appendTo(this.$dialog, this.$scrollContainer) 
-				
+				this.options.position = {
+					top:50,
+					left: 50
+				}
+				this.$dialog.style.cssText = `top:50%;left:50%;margin-top:${-this.$dialog.offsetHeight / 2}px;margin-left:${-this.$dialog.offsetWidth / 2}px;`;
+				if (this.options.position) {
+					if (this.options.position.top) {
+						this.$dialog.style.marginTop = 'auto'; 
+						this.$dialog.style.top = `${this.options.position.top}px`
+					}
+					if (this.options.position.left) { 
+						this.$dialog.style.marginLeft = 'auto'; 
+						this.$dialog.style.left = `${this.options.position.left}px` 
+					}
+				} 
+
 				this.$dialog.addEventListener("click", e=>{  
 					if(e.target.dataset.dialogAction){
 						if(e.target.dataset.dialogAction === "hide"){
 							this.hide()
 						}
 					} 
-				}) 
+				})   
 			},
 	
 			hide: function () {
@@ -174,12 +178,12 @@
 		};
 	
 		$.dialog = function (options) {
-			options = $.extend({}, defaults, options || {});
-			console.log(options)
+			options = $.extend({}, defaults, options || {}); 
 			var dialog = new Dialog(options);
 			if (options.show) {
 				dialog.show();
 			}
+			console.log(options)
 			return dialog;
 		}; 
 }(window, document, jQuery));

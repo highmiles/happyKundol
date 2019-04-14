@@ -55,11 +55,7 @@ body.dialog-no-scroll {
   border: 1px solid #b0b0b0;
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
   border-radius: 4px;
-}
-.dialog-container.dynamic {
-  top: 50%;
-  left: 50%;
-}
+} 
 .dialog-container .dialog-header {
   background-color: #4f537a;
   background-image: -moz-linear-gradient(top, #595e89 0%, #45496a 100%);

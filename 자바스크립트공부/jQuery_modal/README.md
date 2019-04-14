@@ -5,6 +5,9 @@
 4. 실제 모듈에 적용하기 - 디자인 수정
 5. 함수형으로 만들 수 있을까 고민하기
 
+좋은 링크
+http://youmightnotneedjquery.com/
+
 ## 의문점
 왜 mask와 scrollContainer 두가지 나눠서 했는가. 
 scrollContainer = overflow : auto; 
