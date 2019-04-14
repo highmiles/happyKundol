@@ -30,23 +30,7 @@ window.onload = () => {
     var node = document.createElement("LI");                 // Create a <li> node
     var textnode = document.createTextNode("Water");         // Create a text node
     node.appendChild(textnode);                              // Append the text to <li>
-    document.getElementById("myList").appendChild(node);     // Append <li> to <ul> with id="myList"
-
-		createMask: function(loading) {
-			this.$mask = $('<div/>')
-				.addClass('dialog-mask ' + (this.options.transitionMask ? 'dialog-mask-transition' : ''))
-				.appendTo('body');
-
-			if (loading) {
-				this.$mask.addClass('dialog-mask-loading');
-			}
-
-			//force repaint for firefox: http://stackoverflow.com/a/12089264
-			this.$mask
-				.data('forceRepaint', this.$mask[0].clientHeight)
-				.addClass('dialog-mask-active');
-        },
-        
+    document.getElementById("myList").appendChild(node);     // Append <li> to <ul> with id="myList" x
     // 삭제버튼 > dialog > click func > click func
     //                 > close > remove  
     $(".content button.kundol").addEventListener("click", e =>{

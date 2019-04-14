@@ -1,15 +1,9 @@
-var arr = [1, 2, 3, 4]
-function a(){
-    function b(val){
-        i = 10
-        console.log(i)
-        return val * i
-    }
-    for(var i = 0; i < arr.length; i++){
-        arr[i] = b(arr[i])
-    }
-    return arr; 
-}
-console.log(a())
-//10
-//[ 10, 2, 3, 4 ]
+const express = require('express'); 
+const app = express(); 
+app.use(express.static('dist')) 
+app.get('/getAjax', function(req,res){
+    res.send("루시드라는 데이터입니다.") 
+}) 
+app.listen(8080, function(){
+    console.log("app start");
+})

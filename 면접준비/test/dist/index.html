@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>  
+    axios("http://127.0.0.1:8080/getAjax").then(res=>console.log(res)) 
+    </script>
+</head>
+
+<body>
+    <div id="app">
+        데이터를 받기전
+    </div>
+    <button onclick="getAjax()">데이터를 받아라!</button>
+</body>
+</html>
