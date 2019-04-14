@@ -27,6 +27,9 @@ window.onload = () => {
         _div.className = "k_mask"
         document.appendChild(_div) 
     }
+
+    const $ = dom => document.querySelector(dom) ;
+    const log = a => console.log(a)  
     var node = document.createElement("LI");                 // Create a <li> node
     var textnode = document.createTextNode("Water");         // Create a text node
     node.appendChild(textnode);                              // Append the text to <li>

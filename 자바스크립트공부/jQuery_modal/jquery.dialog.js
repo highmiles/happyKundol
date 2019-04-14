@@ -43,6 +43,7 @@
 		fetchBodyAndRender: function() {
 			var body = this.options.body,
 				self = this;
+			console.log(body, typeof(body))
 			if (typeof(body) === 'function') {
 				this.createMask(true);
 
@@ -148,20 +149,25 @@
 			}
 
 			$body = $('<div/>').addClass('dialog-body');
-
+			console.log("body : ", body)
 			if (body) {
+				console.log("body : ", body)
 				if (typeof(body) === 'string') {
+					console.log(1)
 					$body.append($('<p/>').text(body));
 				} else {
+					console.log(2)
 					$body.append(body);
 				}
 			}
+			console.log("$body : ", $body)
 
 			$footer = $('<div/>').addClass('dialog-footer');
 			if (this.options.footer) {
 				if (typeof(this.options.footer) === 'string') {
 					$footer.html(this.options.footer);
 				} else {
+					console.log(2)
 					$footer.append(this.options.footer);
 				}
 			}
