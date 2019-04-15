@@ -6,13 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-    <script src="./jquery.dialog_custom.js"></script> 
+    <script src="./jquery_es6.dialog_custom.js"></script> 
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css">
     <!-- <script src="./jquery.dialog.js"></script>  -->
     <link rel="stylesheet" href="dialog.css">
     <script>
         window.onload = () => {
-            $('#stacked').click(function () { 
-                $.dialog({
+            $('button').click(function () { 
+                k_dialog({
                     title: 'Dialog #1',
                     show: true,
                     modal: true,
@@ -23,7 +24,7 @@
                         .attr('data-dialog-action', 'hide')
                         .text('Close'),
                     body: $('<button/>').text('Launch another dialog').click(function () {
-                        $.dialog({
+                        k_dialog({
                             title: 'Dialog #2',
                             show: true,
                             modal: true,
@@ -36,7 +37,7 @@
                             body: $('<button/>').text('Launch yet another dialog')
                                 .click(
                                     function () {
-                                        $.dialog({
+                                        k_dialog({
                                             title: 'Dialog #3',
                                             width: 300,
                                             height: 300,
@@ -62,7 +63,88 @@
 </head>
 
 <body>
-    <div id="stacked">선택</div>
+        <article>
+                <div class="content">
+                    <h1 class="title"> 서시</h1>
+                    <p>죽는 날까지 하늘을 우러러</p>
+                    <p>한 점 부끄럼이 없기를,</p>
+                    <p>잎새에 이는 바람에도</p>
+                    <p>나는 괴로워했다.</p>
+                    <p>별을 노래하는 마음으로</p>
+                    <p>모든 죽어 가는 것을 사랑해야지</p>
+                    <p>그리고 나한테 주어진 길을</p>
+                    <p>걸어가야겠다.</p>
+                    <p>오늘 밤에도 별이 바람에 스치운다.</p>
+                    <footer>
+                        <button class="kundol">삭제</button>
+                    </footer>
+                </div>
+        
+                <div class="content">
+                    <h1 class="title"> 서시</h1>
+                    <p>죽는 날까지 하늘을 우러러</p>
+                    <p>한 점 부끄럼이 없기를,</p>
+                    <p>잎새에 이는 바람에도</p>
+                    <p>나는 괴로워했다.</p>
+                    <p>별을 노래하는 마음으로</p>
+                    <p>모든 죽어 가는 것을 사랑해야지</p>
+                    <p>그리고 나한테 주어진 길을</p>
+                    <p>걸어가야겠다.</p>
+                    <p>오늘 밤에도 별이 바람에 스치운다.</p>
+                    <footer>
+                        <button>삭제</button>
+                    </footer>
+                </div>
+        
+                <div class="content">
+                    <h1 class="title"> 서시</h1>
+                    <p>죽는 날까지 하늘을 우러러</p>
+                    <p>한 점 부끄럼이 없기를,</p>
+                    <p>잎새에 이는 바람에도</p>
+                    <p>나는 괴로워했다.</p>
+                    <p>별을 노래하는 마음으로</p>
+                    <p>모든 죽어 가는 것을 사랑해야지</p>
+                    <p>그리고 나한테 주어진 길을</p>
+                    <p>걸어가야겠다.</p>
+                    <p>오늘 밤에도 별이 바람에 스치운다.</p>
+                    <footer>
+                        <button>삭제</button>
+                    </footer>
+                </div>
+        
+                <div class="content">
+                    <h1 class="title"> 서시</h1>
+                    <p>죽는 날까지 하늘을 우러러</p>
+                    <p>한 점 부끄럼이 없기를,</p>
+                    <p>잎새에 이는 바람에도</p>
+                    <p>나는 괴로워했다.</p>
+                    <p>별을 노래하는 마음으로</p>
+                    <p>모든 죽어 가는 것을 사랑해야지</p>
+                    <p>그리고 나한테 주어진 길을</p>
+                    <p>걸어가야겠다.</p>
+                    <p>오늘 밤에도 별이 바람에 스치운다.</p>
+                    <footer>
+                        <button>삭제</button>
+                    </footer>
+                </div>
+        
+        
+                <div class="content">
+                    <h1 class="title"> 서시</h1>
+                    <p>죽는 날까지 하늘을 우러러</p>
+                    <p>한 점 부끄럼이 없기를,</p>
+                    <p>잎새에 이는 바람에도</p>
+                    <p>나는 괴로워했다.</p>
+                    <p>별을 노래하는 마음으로</p>
+                    <p>모든 죽어 가는 것을 사랑해야지</p>
+                    <p>그리고 나한테 주어진 길을</p>
+                    <p>걸어가야겠다.</p>
+                    <p>오늘 밤에도 별이 바람에 스치운다.</p>
+                    <footer>
+                        <button>삭제</button>
+                    </footer>
+                </div>
+            </article> 
 </body>
 
 </html>

@@ -149,3 +149,38 @@ body.dialog-no-scroll {
 .dialog-container .dialog-button.dialog-button + .dialog-button {
   margin-right: 5px;
 }
+
+
+button { 
+  transition: all 320ms ease;
+  font-size: 20px; 
+  letter-spacing: 1px;
+  padding: 10px 20px;
+  background-color: #a03cf8;
+  color: #fff;
+  border: none;
+  outline: none;
+  border-radius: 2px;
+  cursor: pointer;
+  width:100%; 
+}
+
+button:hover {
+  transform: scale(1.05);
+  background-color: #ea4cfb;
+  box-shadow: 0 30px 18px -20px rgba(0, 0, 0, 0.5);
+} 
+article{
+    width: 100%;
+    margin: 0 auto; 
+}
+.content{
+    width: 500px; 
+    height: 100%; 
+    margin: 10px auto; 
+    padding: 10px;
+    border: 1px solid #aaa; 
+}
+.title{
+  text-align: center;
+}
