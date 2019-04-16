@@ -23,3 +23,6 @@ class Triple {
   
 //   console.log(tp.triple());
 //   // 'tp.triple is not a function'.
+const a = [2, 1, 3]
+const b =a.sort()
+console.log(a, b)
