@@ -6,10 +6,10 @@ jQuery Modal을 우연히 길을 걷다 발견하여 분석을 해보았습니�
 </center>
 
 ## 분석방법
-[x] jquery.dialog.js >> 핵심적인 요소만 추리기
-[x] jquery >> vanilaJS로 만들기
-[x] ES5 >> ES6로 만들기 - JQuery 좀 귀찮아서 남김
-[x] 실제 모듈에 적용하기 - 디자인 수정
+- [x] jquery.dialog.js >> 핵심적인 요소만 추리기
+- [x] jquery >> vanilaJS로 만들기
+- [x] ES5 >> ES6로 만들기 - JQuery 좀 귀찮아서 남김
+- [x] 실제 모듈에 적용하기 - 디자인 수정
 ### jQuery 를 VanilaJS로 포팅할 때 참고하기 사이트
 http://youmightnotneedjquery.com/
 
