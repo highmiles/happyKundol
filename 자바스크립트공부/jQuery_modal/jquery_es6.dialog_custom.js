@@ -96,13 +96,19 @@ class Dialog {
             }
         })
         this.$dialog = k_add_dataset(k_create("div", "dialog-container"), "dialog", this.id);
+        console.log(this.options.width)
         if (this.options.width) {
             this.$dialog.style.minWidth = this.options.width
+            this.$dialog.style.width = this.options.width
         }
         if (this.options.height) {
             this.$dialog.style.minHeight = this.options.height
+            this.$dialog.style.height = this.options.height
         }
         $header = k_create("div", 'dialog-header');
+        k_append(k_create("span", 'control'), $header); 
+        k_append(k_create("span", 'control'), $header); 
+        k_append(k_create("span", 'control'), $header); 
 
         if (this.options.title) {
             k_append(k_setText(k_create("div", 'dialog-title'), this.options.title), $header);
@@ -121,8 +127,15 @@ class Dialog {
         this.$dialog = k_appendTo($header, this.$dialog)
         this.$dialog = k_appendTo($body, this.$dialog)
         this.$dialog = k_appendTo($footer, this.$dialog)
-        this.$scrollContainer = k_appendTo(this.$dialog, this.$scrollContainer)
-        this.$dialog.style.cssText = `top:50%;left:50%;margin-top:${-this.$dialog.offsetHeight / 2}px;margin-left:${-this.$dialog.offsetWidth / 2}px;`;
+        this.$scrollContainer = k_appendTo(this.$dialog, this.$scrollContainer) 
+
+        this.$dialog.style.cssText = `
+        width:${this.options.width}px;
+        height:${this.options.height}px;
+        min-width:${this.options.width}px;
+        max-height:${this.options.height}px;
+        top:50%;left:50%;margin-top:${-this.options.height / 2}px;margin-left:${-this.options.width / 2}px;
+        `;
         if (this.options.position) {
             if (this.options.position.top) {
                 this.$dialog.style.marginTop = 'auto';
@@ -141,6 +154,7 @@ class Dialog {
                 }
             }
         })
+        console.log(this.$dialog)
     }
     hide() {
         //this.$dialog.trigger('hide');

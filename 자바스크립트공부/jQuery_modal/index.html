@@ -6,15 +6,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-    <script src="./jquery_es6.dialog_custom.js"></script> 
+    <script src="./jquery_es6.dialog_custom.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css">
     <!-- <script src="./jquery.dialog.js"></script>  -->
     <link rel="stylesheet" href="dialog.css">
     <script>
+        const 윤동주_자화상 = `
+        <p>산모퉁이를 돌아 논가 외딴 우물을 홀로 찾아가선</p>
+                <p>가만히 들여다봅니다.</p>
+
+                        <p>우물 속에는 달이 밝고 구름이 흐르고 하늘이 펼치고</p>
+                                <p>파아란 바람이 불고 가을이 있읍니다.</p>
+
+                                        <p>그리고 한 사나이가 있읍니다.</p>
+                                                <p>어쩐지 그 사나이가 미워져 돌아갑니다.</p>
+
+                                                        <p>돌아가다 생각하니 그 사나이가 가엾어집니다.</p>
+                                                                <p>도로 가 들여다보니 사나이는 그대로 있읍니다.</p>
+
+                                                                        <p>다시 그 사나이가 미워져 돌아갑니다.</p>
+                                                                                <p>돌아가다 생각하니 그 사나이가 그리워집니다.</p>
+
+                                                                                        <p>우물 속에는 달이 밝고 구름이 흐르고 하늘이 펼치고</p>
+                                                                                                <p>파아란 바람이 불고 가을이 있고</p>
+                                                                                                        <p>추억처럼 사나이가 있읍니다.</p>
+        `
+
         window.onload = () => {
-            $('button').click(function () { 
+            $('button').click(function () {
                 k_dialog({
-                    title: 'Dialog #1',
+                    title: '자화상',
                     show: true,
                     modal: true,
                     width: 500,
@@ -23,7 +44,8 @@
                         .addClass('dialog-button')
                         .attr('data-dialog-action', 'hide')
                         .text('Close'),
-                    body: $('<button/>').text('Launch another dialog').click(function () {
+                    body: $('<p/>').html(윤동주_자화상).append($('<button/>').text(
+                        'Launch another dialog').click(function () {
                         k_dialog({
                             title: 'Dialog #2',
                             show: true,
@@ -34,7 +56,8 @@
                                 .addClass('dialog-button')
                                 .attr('data-dialog-action', 'hide')
                                 .text('Close'),
-                            body: $('<button/>').text('Launch yet another dialog')
+                            body: $('<button/>').text(
+                                    'Launch yet another dialog')
                                 .click(
                                     function () {
                                         k_dialog({
@@ -45,15 +68,17 @@
                                             modal: true,
                                             body: 'Oh hi there!',
                                             footer: $('<div/>')
-                                                .addClass('dialog-button')
-                                                .attr('data-dialog-action',
+                                                .addClass(
+                                                    'dialog-button')
+                                                .attr(
+                                                    'data-dialog-action',
                                                     'hide')
                                                 .text('Close')
                                         });
                                     })
                         });
-                    })
-                });
+                    }))
+                })
             })
 
         }
@@ -63,88 +88,88 @@
 </head>
 
 <body>
-        <article>
-                <div class="content">
-                    <h1 class="title"> 서시</h1>
-                    <p>죽는 날까지 하늘을 우러러</p>
-                    <p>한 점 부끄럼이 없기를,</p>
-                    <p>잎새에 이는 바람에도</p>
-                    <p>나는 괴로워했다.</p>
-                    <p>별을 노래하는 마음으로</p>
-                    <p>모든 죽어 가는 것을 사랑해야지</p>
-                    <p>그리고 나한테 주어진 길을</p>
-                    <p>걸어가야겠다.</p>
-                    <p>오늘 밤에도 별이 바람에 스치운다.</p>
-                    <footer>
-                        <button class="kundol">삭제</button>
-                    </footer>
-                </div>
-        
-                <div class="content">
-                    <h1 class="title"> 서시</h1>
-                    <p>죽는 날까지 하늘을 우러러</p>
-                    <p>한 점 부끄럼이 없기를,</p>
-                    <p>잎새에 이는 바람에도</p>
-                    <p>나는 괴로워했다.</p>
-                    <p>별을 노래하는 마음으로</p>
-                    <p>모든 죽어 가는 것을 사랑해야지</p>
-                    <p>그리고 나한테 주어진 길을</p>
-                    <p>걸어가야겠다.</p>
-                    <p>오늘 밤에도 별이 바람에 스치운다.</p>
-                    <footer>
-                        <button>삭제</button>
-                    </footer>
-                </div>
-        
-                <div class="content">
-                    <h1 class="title"> 서시</h1>
-                    <p>죽는 날까지 하늘을 우러러</p>
-                    <p>한 점 부끄럼이 없기를,</p>
-                    <p>잎새에 이는 바람에도</p>
-                    <p>나는 괴로워했다.</p>
-                    <p>별을 노래하는 마음으로</p>
-                    <p>모든 죽어 가는 것을 사랑해야지</p>
-                    <p>그리고 나한테 주어진 길을</p>
-                    <p>걸어가야겠다.</p>
-                    <p>오늘 밤에도 별이 바람에 스치운다.</p>
-                    <footer>
-                        <button>삭제</button>
-                    </footer>
-                </div>
-        
-                <div class="content">
-                    <h1 class="title"> 서시</h1>
-                    <p>죽는 날까지 하늘을 우러러</p>
-                    <p>한 점 부끄럼이 없기를,</p>
-                    <p>잎새에 이는 바람에도</p>
-                    <p>나는 괴로워했다.</p>
-                    <p>별을 노래하는 마음으로</p>
-                    <p>모든 죽어 가는 것을 사랑해야지</p>
-                    <p>그리고 나한테 주어진 길을</p>
-                    <p>걸어가야겠다.</p>
-                    <p>오늘 밤에도 별이 바람에 스치운다.</p>
-                    <footer>
-                        <button>삭제</button>
-                    </footer>
-                </div>
-        
-        
-                <div class="content">
-                    <h1 class="title"> 서시</h1>
-                    <p>죽는 날까지 하늘을 우러러</p>
-                    <p>한 점 부끄럼이 없기를,</p>
-                    <p>잎새에 이는 바람에도</p>
-                    <p>나는 괴로워했다.</p>
-                    <p>별을 노래하는 마음으로</p>
-                    <p>모든 죽어 가는 것을 사랑해야지</p>
-                    <p>그리고 나한테 주어진 길을</p>
-                    <p>걸어가야겠다.</p>
-                    <p>오늘 밤에도 별이 바람에 스치운다.</p>
-                    <footer>
-                        <button>삭제</button>
-                    </footer>
-                </div>
-            </article> 
+    <article>
+        <div class="content">
+            <h1 class="title"> 서시</h1>
+            <p>죽는 날까지 하늘을 우러러</p>
+            <p>한 점 부끄럼이 없기를,</p>
+            <p>잎새에 이는 바람에도</p>
+            <p>나는 괴로워했다.</p>
+            <p>별을 노래하는 마음으로</p>
+            <p>모든 죽어 가는 것을 사랑해야지</p>
+            <p>그리고 나한테 주어진 길을</p>
+            <p>걸어가야겠다.</p>
+            <p>오늘 밤에도 별이 바람에 스치운다.</p>
+            <footer>
+                <button class="kundol">삭제</button>
+            </footer>
+        </div>
+
+        <div class="content">
+            <h1 class="title"> 서시</h1>
+            <p>죽는 날까지 하늘을 우러러</p>
+            <p>한 점 부끄럼이 없기를,</p>
+            <p>잎새에 이는 바람에도</p>
+            <p>나는 괴로워했다.</p>
+            <p>별을 노래하는 마음으로</p>
+            <p>모든 죽어 가는 것을 사랑해야지</p>
+            <p>그리고 나한테 주어진 길을</p>
+            <p>걸어가야겠다.</p>
+            <p>오늘 밤에도 별이 바람에 스치운다.</p>
+            <footer>
+                <button>삭제</button>
+            </footer>
+        </div>
+
+        <div class="content">
+            <h1 class="title"> 서시</h1>
+            <p>죽는 날까지 하늘을 우러러</p>
+            <p>한 점 부끄럼이 없기를,</p>
+            <p>잎새에 이는 바람에도</p>
+            <p>나는 괴로워했다.</p>
+            <p>별을 노래하는 마음으로</p>
+            <p>모든 죽어 가는 것을 사랑해야지</p>
+            <p>그리고 나한테 주어진 길을</p>
+            <p>걸어가야겠다.</p>
+            <p>오늘 밤에도 별이 바람에 스치운다.</p>
+            <footer>
+                <button>삭제</button>
+            </footer>
+        </div>
+
+        <div class="content">
+            <h1 class="title"> 서시</h1>
+            <p>죽는 날까지 하늘을 우러러</p>
+            <p>한 점 부끄럼이 없기를,</p>
+            <p>잎새에 이는 바람에도</p>
+            <p>나는 괴로워했다.</p>
+            <p>별을 노래하는 마음으로</p>
+            <p>모든 죽어 가는 것을 사랑해야지</p>
+            <p>그리고 나한테 주어진 길을</p>
+            <p>걸어가야겠다.</p>
+            <p>오늘 밤에도 별이 바람에 스치운다.</p>
+            <footer>
+                <button>삭제</button>
+            </footer>
+        </div>
+
+
+        <div class="content">
+            <h1 class="title"> 서시</h1>
+            <p>죽는 날까지 하늘을 우러러</p>
+            <p>한 점 부끄럼이 없기를,</p>
+            <p>잎새에 이는 바람에도</p>
+            <p>나는 괴로워했다.</p>
+            <p>별을 노래하는 마음으로</p>
+            <p>모든 죽어 가는 것을 사랑해야지</p>
+            <p>그리고 나한테 주어진 길을</p>
+            <p>걸어가야겠다.</p>
+            <p>오늘 밤에도 별이 바람에 스치운다.</p>
+            <footer>
+                <button>삭제</button>
+            </footer>
+        </div>
+    </article>
 </body>
 
 </html>
