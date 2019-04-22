@@ -20,5 +20,5 @@ mask : 그러한게 없음
 
 mask가 구현이 될 때 body에 `overflow : hidden`을 추가해서 드래그 이벤트를 막음
 
-###data이벤트정의
+### data이벤트정의
 `data-dialog-action`으로 이벤트 처리방법을 정의하는데 이걸 안 이용하고는 어떻게 할 수 있을까?  
