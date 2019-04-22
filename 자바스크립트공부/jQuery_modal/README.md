@@ -1,6 +1,6 @@
 
 <center>
-<img src="https://github.com/wnghdcjfe/happyKundol/tree/master/%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8%EA%B3%B5%EB%B6%80/jQuery_modal/img.png" width="700px">
+<img src="https://github.com/wnghdcjfe/happyKundol/blob/master/%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8%EA%B3%B5%EB%B6%80/jQuery_modal/img.png" width="700px">
 </center>
 
 ## 분석방법
