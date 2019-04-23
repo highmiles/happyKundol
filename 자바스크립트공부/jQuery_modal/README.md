@@ -1,9 +1,9 @@
 ## jQuery Modal 분석
 jQuery Modal을 우연히 길을 걷다 발견하여 분석을 해보았습니다. 
 
-<center>
-<img src="https://github.com/wnghdcjfe/happyKundol/blob/master/%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8%EA%B3%B5%EB%B6%80/jQuery_modal/img.png" width="700px">
-</center>
+<p align="center">
+  <img src="https://github.com/wnghdcjfe/happyKundol/blob/master/%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8%EA%B3%B5%EB%B6%80/jQuery_modal/img.png" width="700">
+</p>   
 
 ## 분석방법
 - [x] jquery.dialog.js >> 핵심적인 요소만 추리기
