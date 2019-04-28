@@ -1,3 +1,4 @@
+
 # Web 기초  
 
 [RESTFUL API](#restful-api) 
@@ -1726,33 +1727,11 @@ for (const val of arrayLike) log(val);
 
 외부에서 관찰 가능한 부수효과가 제거된 불변 프로그램을 작성하기 위해 순수함수를 선언적으로 평가하는 것을 말합니다.  
 
-부수효과가 없다는 것: 함수의 출력은 오로지 그 함수에 입력된 값에만 의존성을 가진다는 의미이다. 
+ > 부수효과가 없다는 것: 함수의 출력은 오로지 그 함수에 입력된 값에만 의존성을 가진다는 의미
 
-#### 순수함수
+#### 순수함수와 참조 투명성
 외부의 인자를 변화시키지 않고 최대한 지역변수만을 써서 구현되는 함수입니다. 
-인수로 넘기는 값의 본체조차 수정되면 안됩니다. 즉, 함수인수로 넘길 때 객체에 변이를 일으키지 않도록 주의를 하며 deep copy를 한 후 변이를 하던가 등의 
-방법을 써야 합니다. 
-
-#### 클로저
-클로저는 독특한 함수체제를 멋지게 활용할 수 있습니다. 
- - 프라이빗 변수를 모방
- - 서버 측 비동기 호출
- - 가상의 블록 스코프 변수를 생성 
-#### 모나드
-값은 컨테이너화 하는 행위는 함수형 프로그래밍의 기본 디자인패턴
-연산을 컨테이너에 매핑하고 체이닝 가능한 표현식 또는 계산일뿐이라서 마치 공장 컨베이어 벨트처럼 순서대로 흘려 보내면서 단계별로 부가 처리를 할 수 있게 배열할 수 있습니다.
-```
-fg('{"k: 10 }').catch(_ => '미안...').then(log);
-```
-이 때.. chain 패턴이나 _.compose, Promise 등의 일종의 파이프라인 혹은 모나드 등에서 아쉬운점은 함수 모음의 첫번째 함수를 제외하고는 인자를 하나만 받을 수 있다는 점 입니다.
-#### 애러처리
-예외를 던지는 행위는 참조 투명성 원리에 위배됩니다. 
-함수 호출 범위를 벗어나 전체 시스템에 영향을 미치는 부수효과를 일으킵니다
-비지역성 원리위배, 지역스택과 환경에 벗어납니다. 이는 모나드를 통해 해결합니다. 
-
-#### 참조투명성
-순수함수와 비슷한 개념, 같은 입력에 같은 결과를 반환해야 한다. 즉, 동일입력을 동일결과에 매핑해야 합니다. 수학적인 형태로 프로그램을 헤아릴 수 있다.
-외부변수에 종속되지 않고, 동일한 입력을 받았을 때 동일한 결과를 내면 참조 투명한 함수 
+인수로 넘기는 값의 본체조차 수정되면 안됩니다. 즉, 함수인수로 넘길 때 객체에 변이를 일으키지 않도록 주의를 하며 deep copy를 한 후 변이를 하던가 등의 방법을 써야 합니다. 또한 외부변수에 종속되지 않고, 동일한 입력을 받았을 때 동일한 결과를 내는 참조 투명한 함수를 써야 합니다. 
 ```
 var c = 0;
 function f(){
@@ -1761,15 +1740,154 @@ function f(){
 
 const f = c => c + 1
 ```
-테스트용이 / 전체로직 파악 용이합니다. 
-_.chain 은 value()에 시동을 걸면 전체 함수 순차열을 몽땅 실행하게 한다. 
+#### 클로저
+클로저는 독특한 함수체제를 멋지게 활용할 수 있습니다. 
+ - 프라이빗 변수를 모방
+ - 서버 측 비동기 호출
+ - 가상의 블록 스코프 변수를 생성 
+#### 모나드와 애러처리
+값은 컨테이너화 하는 행위는 함수형 프로그래밍의 기본 디자인패턴
+연산을 컨테이너에 매핑하고 체이닝 가능한 표현식 또는 계산일뿐이라서 마치 공장 컨베이어 벨트처럼 순서대로 흘려 보내면서 단계별로 부가 처리를 할 수 있게 배열할 수 있습니다.
+```
+fg('{"k: 10 }').catch(_ => '미안...').then(log);
+``` 
+예외를 던지는 행위는 참조 투명성 원리에 위배됩니다. 
+함수 호출 범위를 벗어나 전체 시스템에 영향을 미치는 부수효과를 일으킵니다
+비지역성 원리위배, 지역스택과 환경에 벗어납니다. 이를 위코드처럼 퓨처 모나드라는 프로미스에 컨테이너에 감싸서 해결합니다.  
 
-파이프 &  체이닝
- - 체이닝 : 단단한 결합, 제한된 표현성
- - 파이프 : 느슨한 결합, 유연성
- - 파이라이닝은 함수를 연결하는 또 다른 기법입니다.  
-[나중에]
+#### 이터러블/이터레이터 프로토콜
+ - 이터러블: 이터레이터를 리턴하는 [Symbol.iterator]()라는  키를 가진 값
+ - 이터레이터: { value, done } 객체를 리턴하는 next() 를 가진 값
+ - 이터러블/이터레이터 프로토콜: 이터러블을 for...of, 전개 연산자 등과 함께 동작하도록한 규약
 
+#### 제너레이터와 이터러블
+제너레이터는 커스텀형 이터레이터로 함수자체가 이터러블을 생성한다. 이터러블은 반복할 수 있는 순차적인 객체를 뜻한다. Es6에서는 for of로 이터러블한 객체를 쉽게 순회할 수 있으며 객체 확장연산자인 ... spread Syntax로 배열을 만들 수 있다. 
+
+ > ...연산자는 적용되는 공간에서의 인수들(string, 배열, key-value)에 따라 그 공간에 맞는 인수 또는 요소로 확장할 수 있게 하는 연산자이다. 
+```
+const log = a => console.log(a)
+function* gen() {
+    yield 10;
+    if (false) yield 20;
+    yield 30;
+}
+let iter = gen();
+log([...iter]); 
+for (const a of iter) {
+    log(a);
+} 
+```
+`[Symbol.iterator]()`를 갖고 있기 떄문에 이터레이터한 객체를 커스텀하게 만들 수 있다. 
+```
+var myIterable = {
+    *[Symbol.iterator]() {
+        yield 1;
+        yield 2;
+        yield 3;
+    }
+}
+```
+이렇게도 만들 수 있다. 
+```
+
+const iterable = {
+    [Symbol.iterator]() {
+        let data = ['foo','bar']
+        return { // Iterator
+            next() {
+                return {
+                    done: data.length === 0,
+                    value: data.pop()
+                }
+            }
+        }
+    }
+}
+
+for(let e of iterable) {
+    console.log(e)
+    // 'foo'
+    // 'bar'
+}
+```
+
+배열에 `[Symbol.iterator]()`라는 키를 만들어서 이렇게 이터레이터를 만들 수 있다. 
+```
+const array = ['foo','bar','zed']
+
+// Array is a data source because it implements an iterator.
+console.log(typeof array[Symbol.iterator]) // function
+
+// We first get the iterator which allow us to iterate (i.e. consume) over the array values.
+const iterator = array[Symbol.iterator]()
+
+// The iterator follows the protocol of being an object with the 'next' function.
+console.log(typeof iterator.next) // function
+
+// Calling .next() returns the next element in the iteration.
+iterator.next() // { value: 'foo', done: false }
+iterator.next() // { value: 'bar', done: false }
+iterator.next() // { value: 'zed', done: false }
+
+// Until there's no more elements to iterate, which then returns 'done' as true.
+iterator.next() // { value: undefined, done: true }
+```
+
+응용 : 0을 초기값으로 받지 않을 때 예외처리를 함으로써 `iter`을 만들고 초기값을 `next().value`를 통해 설정한다. 
+```
+const log = a => console.log(a)
+const reduce = (f, acc, iter) => {
+    if (!iter) { 
+        iter = acc[Symbol.iterator]();
+        acc = iter.next().value; 
+    }
+    for (const a of iter) {
+        acc = f(acc, a);
+    }
+    return acc;
+};
+const add = (a, b) => a + b;
+log(reduce(add, [1,2,3,4,5]));
+```
+
+응용 : curry
+```
+const log = a => console.log(a)
+const curry = f => (a, ...bs) =>{ 
+    return bs.length ? f(a, ...bs) : (...bs) => f(a, ...bs);
+}
+     
+const filter = curry(function* (f, iter) {
+    for (const a of iter)if (f(a)) yield a;
+});
+const map = curry(function* (f, iter) {
+    for (const a of iter) yield f(a);
+});
+const take = curry(function* (length, iter) {
+    for (const a of iter) {
+        yield a;
+        if (--length == 0) break;
+    }
+});
+const reduce = curry(function (f, acc, iter) { 
+    if (!iter) { 
+        iter = acc[Symbol.iterator]();
+        acc = iter.next().value;
+    }
+    for (const a of iter) {
+        acc = f(acc, a);
+    }
+    return acc;
+}); 
+function f(list, length) {
+    log(
+        reduce((a, b) => a + b,
+            take(length,
+                map(a => a * a,
+                    filter(a => a % 2, list)))))
+}
+f([1, 2, 3], 3);
+```
 ### docker 
 https://subicura.com/2017/01/19/docker-guide-for-beginners-1.html
 
