@@ -1,4 +1,4 @@
-# 프론트엔드정리  
+# Web 기초  
 
 [RESTFUL API](#restful-api) 
 
@@ -130,7 +130,7 @@
 }
 ```
 [RTT설명링크](https://m.blog.naver.com/PostView.nhn?blogId=goduck2&logNo=220076011565&proxyReferer=https%3A%2F%2Fwww.google.com%2F)
-
+### TCP / IP
 
 ### RESTFUL API 
 
@@ -481,17 +481,19 @@ pushState의 예
 ```
 
 ### Promise와 callback
-두 패턴 모두 Continuation Passing Style(CPS) 방식으로 Promise 패턴이 Promise 객체를 넘기는 것과 달리 Callback 패턴은 다음 할 일을 계속 Callback함수를 인자로 넘긴다. Callback 사용시 Client-side JavaScript에서는 비교적 로직이 적어 Callback 사용이 도움이 될 때도 있지만 business logic을 가진 Server-side 언어로 사용시 코드의 가독성을 떨어트리고, 디버그를 어렵게(hard to debug) 만든다.
+두 패턴 모두 Continuation Passing Style(CPS) 방식으로 Promise 패턴이 Promise 객체를 넘기는 것과 달리 Callback 패턴은 다음 할 일을 계속 Callback함수를 인자로 넘깁니다. 
+
+Callback 사용시 Client-side JavaScript에서는 비교적 로직이 적어 Callback 사용이 도움이 될 때도 있지만 business logic을 가진 Server-side 언어로 사용시 코드의 가독성을 떨어트리고, 디버그를 어렵게(hard to debug) 만듭니다. 
+
 보통 Callback Hell을 해결할 방법으로 Promise를 소개하는 경우가 많은데 엄밀히 말하면 Callback Hell을 해결할 수 없고 일부를 완화하는 것이다. Callback Hell을 완화할 수 있는 이유는 단일 인터페이스와 명확한 비동기 시점 표현, 강력한 에러 처리 메커니즘 때문이다. 하지만 이것은 Callback Hell 뿐만 아니라 비동기 처리 자체를 손쉽게 다룰 수 있도록 하는 것이므로 Callback Hell 해결하는 방법으로 여기는건 바람직하지 않다.
 앞에서 Callback을 Promise 패턴으로 중첩되지 않는 형태로 변환했는데 결국 Promise 체인을 길게 연결 한다면 외형(가독성↑)만 다를 뿐 Callback Hell 문제 해결과는 큰 차이가 없다.
+
 Promise는 미래 어느 시점이 되면 값을 채워주기로 약속한 빈 그릇이며 비동기 처리를 추상화한 추상 컨테이너이다. 즉, 통일된 인터페이스로 데이터를 전달할 수 있는 컨테이너로써 장점을 발휘하는 것이다.
 본질적으로 전통적인 Callback과 Promise 두 패턴 모두 해결하고자 하는 문제는 비동기 처리를 손쉽게 다루기 위함이다. 비동기 처리를 다루는 방법이 두 가지이지 모든 경우 Promise로 프로그래밍을 할 수 있다고 생각하면 안 된다. 이벤트 리스너, Stream 처럼 정기적, 지속적으로 비동기 처리가 필요한 경우 Promise를 사용하면 오히려 이상적인 결과를 얻을 수 없고 강력한 에러 처리 메커니즘이 독이 되는 경우가 발생한다.
 
-
 Promise는 비동기적으로 대기(Pending) / 성공(Fulfilled, resolve) / 실패(Rejected, reject)를 다루는 값입니다. ES6+에서는 Promise와 관련하여 `new Promise, then, catch, race, Promise.all, Promise.resolve, Project.reject` 등을 지원합니다. Promise는 보통 소개된 것보다 훨씬 많은 가능성을 지닌 값이며, 자바스크립트에서의 동시성/비동기 프로그래밍을 지탱하는 기반입니다. ES6+에서는 */yield, async/await와 함께 사용될 수 있습니다.
 
-자바스크립트에서 비동기 프로그래밍은 매우 중요하며, bluebird, js-csp, co, RxJS 등의 다양한 비동기 해법들이 제시되고 있습니다. 본 강의에서는 일급 객체로서의 Promise 활용을 통해 다양한 함수의 인자와 결과 값으로 전달하면서 높은 수준의 동시성 프로그래밍을 구현하는 사례들을 다룰 것입니다.
-
+자바스크립트에서 비동기 프로그래밍은 매우 중요하며, bluebird, js-csp, co, RxJS 등의 다양한 비동기 해법들이 제시되고 있습니다. 
 
 ### 불변객체
 Javascript의 원시 타입(primitive data type)은 변경 불가능한 값(immutable value)입니다. 
@@ -658,7 +660,8 @@ for (const val of arrayLike) log(val);
 
 ### 호이스팅
 모든 함수, 변수를 선언 될 때 **스코프**의 가장 상단으로 가는 것을 말합니다. let, const로 선언해도 일어납니다. 안 일어나는 것이 아닙니다. TDZ로 var처럼 선언 & 초기화 동시발생을 막았을 뿐. 
- - 스코프 : 변수, 매개변수의 접근성, 생존기간을 말합니다. 
+
+> 스코프 : 변수, 매개변수의 접근성, 생존기간을 말합니다. 
 
 var로 선언하면 선언 & 초기화가 동시에 일어나기 때문에 undefined로 접근할 수 있지만
 const / let으로 선언하게 되면 선언 TDZ 초기화 로 TDZ가 막기 때문에 Reference Error로 호이스팅이 일어나지만 호이스팅을 막을 수 있습니다. 
@@ -866,12 +869,29 @@ var list3 = leadingThirtysevenList(1, 2, 3); // [37, 1, 2, 3]
 동일 출처 정책(same-origin-policy)은 하나의 웹 페이지에서 다른 도메인 서버에 요청하는 것을 제한하는 것이다. 제한하는 이유는 간단한데, 내가 네이버라고 가정해보자.
 누군가 다른 포탈 서비스를 만들고, 네이버에서 검색한 결과만 가져온다면 문제가 되지 않을까? 때문에 보통의 브라우저에서는 외부 도메인으로의 Ajax로 요청을 보낼 때, cors를 체킹한다. 
 
-#### 헤더로 해결한다. 
+#### 서버 : 헤더로 해결한다. 
 `response.setHeader("Access-Control-Allow-Origin", "*");`
 * 는 모든 도메인에 대해 허용하겠다는 의미. 즉 어떤 웹사이트라도 이 서버에 접근하여 AJAX 요청하여 결과를 가져갈 수 있도록 허용하겠다는 의미.
 만약 보안 이슈가 있어서 특정 도메인만 허용해야 한다면 * 대신 특정 도메인만을 지정할 수 있음.
 
-#### JSONP (JSON with Padding)
+#### 서버 : cors라는 npm을 사용한다. 
+```
+var express = require('express')
+var cors = require('cors')
+var app = express()
+
+app.use(cors())
+
+app.get('/products/:id', function (req, res, next) {
+  res.json({msg: 'This is CORS-enabled for all origins!'})
+})
+
+app.listen(80, function () {
+  console.log('CORS-enabled web server listening on port 80')
+})
+```
+
+#### 클라이언트 : JSONP (JSON with Padding)
 `<script/>` 태그는 `same-origin-policy (SOP)` 정책에 속하지 않는다는 사실을 근거로, 서로 다른 도메인간의 javascript 호출을 한다.
 ```
 var script = document.createElement('script'); 
@@ -997,13 +1017,12 @@ GO, 함수의 스코프 주소를 차례대로 담은 리스트입니다. 순차
  - lazy 로딩:  이미지, 스크립트, CSS 파일들이 lazy 로드 되어서 현 페이지의 응답시간을 향상시킴
 
 ### 가상요소선택자, 가상클래스 선택자(CSS Pseudo code)
-CSS Pseudo-element 는 Selector 에 추가된 키워드로, 선택한 요소의 특정한 부분을 스타일링 할 수 있습니다. 마크업을 수정하지 않고 (`:before`, `:after`) 텍스트 데코레이션을 위해 사용하거나 (`:first-line`, `:first-letter`) 또는 마크 업에 요소를 추가할 수 있습니다. (`content: ...` 와 결합)
+#### 가상요소 선택자
+`CSS Pseudo-element` 는 Selector 에 추가된 키워드로, 선택한 요소의 특정한 부분을 스타일링 할 수 있습니다. 마크업을 수정하지 않고 (`:before`, `:after`) 텍스트 데코레이션을 위해 사용하거나 (`:first-line`, `:first-letter`) 또는 마크 업에 요소를 추가할 수 있습니다. (`content: ...` 와 결합)
+툴팁의 삼각형 화살표는 `:before` 와 `:after` 를 사용해서 추가적인 HTML 요소를 사용하지 않고 CSS 스타일만으로 삼각형을 그립니다.  
 
-* `:first-line` 과 `:first-letter` 는 텍스트를 데코레이션하는데 사용될 수 있습니다.
-* 위와 같이 `.clearfix` 에 사용되어 `clear: both` 로 영역을 차지하지 않는 요소를 추가합니다.
-* 툴팁의 삼각형 화살표는 `:before` 와 `:after` 를 사용합니다. 삼각형이 실제로 DOM 이 아닌 스타일의 일부로 간주되기 때문에 분리하는 것이 좋습니다. 추가적인 HTML 요소를 사용하지 않고 CSS 스타일만으로 삼각형을 그릴 수는 없습니다.
-`CSS Pseudo-class` 는 :visited, :hover 어떤 요소에 관한 것이며 
-`CSS Pseudo-element`는 ::before, ::after 등 요소가 정해져있지 않지만 특정한 부분을 가리킬 때 쓰이는 선택자입니다.
+#### 가상클래스 선택자  
+`:visited`, `:hover` 어떤 등 클래스가 존재하지 않지만 어떤 행위에 대해서 가상적인 클래스를 만들 때 사용됩니다.  
  
 
 ### `cookie`, `sessionStorage`, `localStorage` 사이의 차이점
@@ -1095,19 +1114,17 @@ CSS `clear` 속성은`left`/`right`/`both` float 엘리먼트 아래에 위치�
 부모 요소에 float 된 요소만 있으면 그 요소로 반영되는 높이는 무효가 됩니다. 
 컨테이너의 플로팅된 요소 다음에 있지만 컨테이너가 닫히기 전에 float 를 clear 하면 해결할 수 있습니다.
 
-`.clearfix` 핵은 영리한 CSS 의사 선택자 (`: after`)를 사용하여 실수를 제거합니다. 상위 클래스에 overflow 를 설정하는 대신 추가 클래스 `clearfix`를 적용하기도 합니다. 가상선택자를 사용해서 DOM태그를 줄이면 좋스니다.  
+이 때 가상선택자를 사용해서 DOM태그를 줄이면 좋습니다.  
 
 ```css
-.clearfix:after {
-  content: ' ';
-  visibility: hidden;
-  display: block;
-  height: 0;
+.parent::after {
+  content: ' '; 
+  display: block; 
   clear: both;
 }
 ```
 
-양자택일로, 부모 요소에 `overflow : auto` 또는 `overflow : hidden` 속성을 주면 자식 요소 내부에 새로운 블록 포맷 컨텍스트을 설정하고 자식을 포함하도록 확장합니다.
+양자택일로, 부모 요소에 `overflow : auto` 또는 `overflow : hidden` 속성을 주어서 자식 요소 내부에 새로운 블록 포맷 컨텍스트을 설정하고 자식을 포함하도록 확장해도 됩니다. 
  
 ### `z-index`의 작동법
 CSS 의 `z-index`속성은 요소의 겹치는 요소의 순서를 제어합니다. `z-index`는 `static`이 아닌 `position` 및 `relative`값을 갖는 요소에만 영향을 줍니다.
@@ -1126,7 +1143,7 @@ CSS 의 `z-index`속성은 요소의 겹치는 요소의 순서를 제어합니�
 | 크기                             | 부모 컨테이너의 너비를 채 웁니다.                                                           | 내용에 따라 달라집니다.                                          | 내용에 따라 달라집니다.                                                                                                                                                           |
 | 위치                             | 새 줄에서 시작하고 그 옆에 HTML 요소를 허용하지 않습니다 (`float`을 추가 할 때를 제외하고). | 다른 콘텐츠와 함께 흐르고 다른 요소는 옆에 있는 것을 허용합니다. | F 다른 콘텐츠와 함께 흐르고 다른 요소는 옆에 있는 것을 허용합니다.                                                                                                                |
 | `width`, `height` 지정 가능 여부 | 가능                                                                                        | 가능                                                             | 불가능. 설정되면 무시됩니다.                                                                                                                                                      |
-| `vertical-align` 정렬 가능 여부  | 불가능                                                                                      | 불가능                                                           | 불가능                                                                                                                                                                            |
+| `vertical-align` 정렬 가능 여부  | 불가능                                                                                      | 가능                                                           | 불가능                                                                                                                                                                            |
 | margin 및 padding                | 모든 방향에서 가능.                                                                          | 모든 방향에서 가능.                                               | 수평방향만 가능. 세로방향을 지정하면 레이아웃에 영향을 주지 않습니다. `border` 와 `padding` 이 콘텐츠 주위에 시각적으로 나타나는 경우에도 수직영역은 `line-height` 에 의존합니다. | 
 | Float | - | - | 수직 margin 과 padding 을 설정할 수 있는 `block` 엘리먼트와 같습니다. |
 ### `relative`, `fixed`, `absolute` 와 `static` 요소의 차이점
@@ -1155,18 +1172,18 @@ CSS 의 `z-index`속성은 요소의 겹치는 요소의 순서를 제어합니�
 }
 ``` 
 
-### 콘텐츠 숨기는 방법 
-이러한 기술은 접근성 (a11y)에 관련이 있습니다.
+### 콘텐츠 숨기는 방법  
 * `display :none`
 * `visibility: hidden`. 그러나 요소는 아직 페이지의 흐름에 여전히 공간을 차지하고 있습니다.
 * `width: 0; height: 0`. 요소가 화면의 어떤 공간도 차지하지 않도록하십시오. 결과적으로 보이지 않습니다.
 * `position: absolute; left: -99999px`. 화면 외부에 배치합니다.
 * `text-indent: -9999px`. 이것은 `block`인 엘리먼트 내의 텍스트에서만 작동합니다.
-* 메타 데이터. 예를 들어, Schema.org, RDF 및 JSON-LD 를 사용합니다.
-* WAI-ARIA. 웹 페이지의 접근 가능성을 높이는 방법을 지정하는 W3C 기술 사양입니다. 
 
-WAI-ARIA 가 이상적인 해결책이라 하더라도 저는 `absolute` 접근법을 택할 것입니다. 대부분의 요소에서 작동하며 간단한 기술입니다.
-https://github.com/lezhin/accessibility/blob/master/aria/README.md#aria-hidden
+### 웹접근성
+ - 메타 데이터. 예를 들어, Schema.org, RDF 및 JSON-LD 를 사용합니다.
+ - WAI-ARIA. 웹 페이지의 접근 가능성을 높이는 방법을 지정하는 W3C 기술 사양입니다. 
+#### WAI-ARIA
+role 속성을 사용하여 객체(article, alert, slider와 같은 것들)의 일반(general) 타입을 정의할 수 있습니다. 이 외에도 ARIA 속성을 추가로 사용하여 서식에 관한 설명이나 상태바(progressbar)의 현재 값을 제공하는 등 유용한 프로퍼티들을 제공할 수 있습니다. 
 
 ### attribute와 property의 차이점
 attribute 속성은 HTML 마크업에 정의되지만 property 속성은 DOM에 정의됩니다. DOM이 변경될 때 같이 변화되는 것을 Property라고 합니다. 
@@ -1219,12 +1236,13 @@ console.log(a == undefined); // true
 ```
 ### DOCTYPE
 **DOCTYPE**은 **document type**의 약어입니다.
-**DOCTYPE**은 항상 **DTD(Document Type Definition)**와 관련됩니다.
-**DTD**는 특정 문서가 어떻게 구성되어야 하는지 정의합니다(예시: `button`은 `span`을 포함할 수 있지만, `div`는 그럴 수 없다.), 반면, **DOCTYPE**은 문서가 _대략_ 존중할만한 **DTD**를 선언합니다. (예시: 이 문서는 HTML DTD를 존중한다.)
+**DOCTYPE**은 항상 **DTD(Document Type Definition)**와 관련되며 **DTD**는 특정 문서가 어떻게 구성되어야 하는지 정의합니다(예시: `button`은 `span`을 포함할 수 있지만, `div`는 그럴 수 없다.)
 
-웹 페이지의는 DOCTYPE 선언이 필요합니다. 유저 에이전트에게 문서가 존중하는 HTML 사양의 버전을 알리는데 사용됩니다.
-유저 에이전트가 올바른 DOCTYPE을 인식하면, 문서를 읽는데에 DOCTYPE과 일치하는 **no-quirks mode**를 트리거합니다.
-유저 에이전트가 올바른 DOCTYPE을 인식하지 못하면, **quirks mode**를 트리거합니다.
+HTML은 한 종류가 아니라, 여러 종류의 HTML이 있습니다. HTML 4.01 Strict, HTML 4.01 Transitional, XHTML 1.0 등입니다. 이러한 유형에 따라서 같은 코딩을 하더라도 html 파일 실행시에 다른 결과 화면으로 나타나며, Doctype 선언했을 경우와 선언하지 않았을 경우, 브라우저에 따라서 다르게 출력이 됩니다.  
+만약 DOCTYPE 선언하지 않는다면 브라우저는 현재 페이지가 어떠한 HTML 버전을 사용하고 있는지 인식할 수 없기 때문에 호환모드(quirks mode)로 변환을 해서 rendering(화면구현)하게 됩니다. 
+
+#### Quirks Mode
+Quirks mode는 오래된 웹 브라우저들을 위해 디자인된 웹 페이지의 하위 호환성을 유지하기 위해 W3C나 IETF의 표준을 엄격히 준수하는 Standards Mode를 대신하여 사용되는 웹 브라우저의 기술을 나타낸다. 같은 코드라도 웹 브라우저마다 서로 해석을 달리 하기 때문에, 전혀 다른 결과물을 보여주게 된다.
 
 HTML5 표준에 대한 DOCTYPE 선언은 `<!DOCTYPE html>`입니다.
 ### http2
@@ -1263,7 +1281,8 @@ HTTP/1.1의 connection당 하나의 요청처리를 개선할 수 있는 기법�
 
  - 무거운 Header 구조 (특히 Cookie)
 http/1.1의 헤더에는 많은 메타정보들이 저장되어져 있다.  사용자가 방문한 웹페이지는 다수의 http요청이 발생하게 되는데 이 경우 매 요청시 마다 중복된 헤더값을 전송하게 되며(별도의 domain sharding을 하지 않았을 경우) 또한 해당 domain에 설정된 cookie정보도 매 요청시 마다 헤더에 포함되어 전송되며 어쩔땐 요청을 통해서 전송하려는 값보다 헤더 값이 더 큰경우도 비일비재 하다.
-이를 극복하기 위해서 위해서 
+
+#### 이를 극복하기 위한 방법 
  - Image Spriting 
  - Domain Sharding(동시에 한 도메인으로부터 6개의 데이타를 동시에 받는 성질을 이용해)
  - Minify CSS/Javascript 
@@ -1327,6 +1346,8 @@ SSL/TLS 세션은 다음 핸드셰이크 과정을 거친 후에 구축됩니다
 
 클라이언트가 PUSH_PROMISE 프레임을 수신한 후에 (RST_STREAM 프레임을 통해) 해당 스트림을 거부할 수 있는 옵션이 있습니다. (예를 들어, 리소스가 이미 캐시에 있기 때문에 이러한 상황이 발생할 수 있습니다) 이것은 HTTP/1.x에 비해 개선된 중요한 기능입니다. 반대로 리소스 인라인 처리 사용은 HTTP/1.x에서 인기 있는 '최적화' 방법으로, '강제 푸시'와 동일합니다. 클라이언트는 인라인 처리된 리소스를 개별적으로 옵트아웃하거나 취소하거나 처리할 수 없습니다.
 
+> 옵트아웃(Opt-out)은 당사자가 자신의 데이터 수집을 허용하지 않는다고 명시할 때 정보수집이 금지되는 제도이다.
+
 HTTP/2에서는 클라이언트가 서버 푸시의 사용 방식을 완벽하게 제어합니다. 클라이언트는 동시에 푸시되는 스트림의 수를 제한할 수 있고, 스트림이 최초로 열릴 때 푸시되는 데이터의 크기를 제어하는 초기 흐름 제어 창을 조정할 수 있으며, 서버 푸시를 완전히 비활성화할 수도 있습니다. 이러한 기본은 HTTP/2 연결 시작 시에 SETTINGS 프레임을 통해 전달되며 언제든지 업데이트될 수 있습니다.
 
 #### Header Compression
@@ -1334,28 +1355,54 @@ HTTP/2는 Header 정보를 압축하기 위해 Header Table과 Huffman Encoding 
 HTTP/1.x의 경우 두개의 요청 Header에 중복값이 존재해도 그냥 중복 전송한다. 하지만 HTTP/2에선 Header에 중복값이 존재하는 경우 Static/Dynamic Header Table 개념을 사용하여 **중복 Header를 검출**하고 중복된 Header는 index값만 전송하고 중복되지 않은 Header정보의 값은  Huffman Encoding 기법으로 인코딩 처리 하여 전송한다.
  
 
-### 브라우저의 렌더링 과정
-https://d2.naver.com/helloworld/59361 
-https://www.phpied.com/rendering-repaint-reflowrelayout-restyle/
-
+### 브라우저의 렌더링 과정 
+ - 과정
+ - vSync
+ - 리플로우 / 리페인트 최소화 
+#### 과정
 <p align="center">
   <img src="https://github.com/wnghdcjfe/happyKundol/blob/master/prepare/img/1.png" width="700">
+</p>  
+HTML >> DOM토큰(이 과정을 HTML파싱) >> DOM트리 >> CSS규칙(파싱된 CSS결과인 CSSOM)에 따라 Render트리생성(display:none제거 / font-size 등 상속 스타일 부모에만 위치하게설계) >> Layout설정(좌표 설정, 보통 부모를 기준으로 설정됨 / Global Layout이 변경될 때는 브라우저의 사이즈가 증가 하거나 폰트사이즈를 증가시키면 변경된다. ) >> paint(한 픽셀 한 픽셀 인쇄하는 듯 칠해지게 된다. )
+
+렌더트리는 DOMTree와 1 : 1 관계가 아니다. 화면에 보여줄 부분만 렌더링을 하기 위해 트리로 만드는 것. 
+
+최신 브라우저는 JS > Recalc Style > Layout > Update Layer Tree > Paint > Composite 의 과정으로 화면 생성됩니다. 
+
+이 과정을 vSync 안에서 즉, 16.6ms안에 끝내야 합니다. 
+
+예전 브라우저는 이 모든 과정을 메인쓰레드 즉, 싱글코어밖에 사용하지 못하는 구조이였지만 최신브라우저는 이를 분할했습니다. 
+<p align="center">
+  <img src="https://github.com/wnghdcjfe/happyKundol/blob/master/prepare/img/browser.png" width="700">
+</p> 
+<p align="center">
+  <img src="https://github.com/wnghdcjfe/happyKundol/blob/master/prepare/img/multi thread.png" width="700">
+</p>   
+ - Compositor Thread : scrolling, animation, zoomIn/ out : 단독으로 호출 가능
+ - Raster Thread : draw line을 직접 수행한다. 
+ - Paint : 레이어 별로 색을 칠한다. 
+ - Composite : 레이어를 합쳐 bitmap으로 만듬
+
+가장 끝단을 수정하는 것이 제일 좋으며 각 단계에서는 이 점을 고려하면 최적화가 됩니다. 
+ - Layout : width, height, font(1000개 이하의 DOM이 효율적)
+ - Paint : color, background (GPU Rsterization를 이용하면 더 빠름. `view-port content="width=device-width"`를 사용하면 됨.)
+ - Composite : opacity, transform()(레이어는 30개 이하의 레이어가 효율적입니다.)
+
+#### vSync
+<p align="center">
+  <img src="https://github.com/wnghdcjfe/happyKundol/blob/master/prepare/img/vSync.png" width="700">
 </p> 
 
-HTML >> DOM토큰(이 과정을 HTML파싱) >> DOM트리 >> CSS규칙에 따라 Render트리생성(display:none제거 / font-size 등 상속 스타일 부모에만 위치하게설계)
-Layout설정 >>  
+테스트
+<p align="center">
+  <img src="./img/vSync2.png" width="700">
+</p> 
 
-최근 브라우저는 JS > Layout > Paint > Composite 의 과정으로 화면 생성
- - Layout : width, height, font
- - Paint : color, background >> GPU Rsterization를 이용하면 더 빠름. view-port를 사용하면 됨. 
- - Composite : opacity, transform
+자연스럽게 화면을 바꿀 수 있는 타이밍을 뜻합니다. 
 
-가장 끝단을 수정하는 것이 제일 좋음.pipe line stage costs
-30개 정도의 레이어가 효율적
-이 파이프라인을 vSync 길이 안에서 끝내야 합니다. 
-#### vSync란? 
-자연스럽게 화면을 바꿀 수 있는 타이밍
-[나중에]
+#### 리플로우 / 리페인트 최소화
+노드를 추가하거나 스타일을 변경하면 리플로우와 리페인트가 일어나게 된다. 이를 통해 부라우저 렌더링이 통째로 일어나게 되고 많은 cost를 가져오게 됩니다. 
+이를 최소화하는 것이 중요합니다. 
 ```
 var bstyle = document.body.style; // cache
  
@@ -1370,7 +1417,13 @@ bstyle.fontSize = "2em"; // reflow, repaint
 // new DOM element - reflow, repaint
 document.body.appendChild(document.createTextNode('dude!'));
 ```
-
+아래의 요소에 요청을 하기만 하는 스크립트를 작성해도 변경대기열큐에 쌓이게 됩니다. 그리고 변경하는 스크립트가 있다면 flush가 발생하면서 대기열큐에 있던 것이 사라지면서 리플로우/ 리페인트가 일어나게 됩니다. 
+```
+offsetTop, offsetLeft, offsetWidth, offsetHeight
+scrollTop 
+clientTop 
+getComputedStyle(), or currentStyle in IE
+```
 ### DIP(Dependency Inversion Principle) 의존 역전 원칙 
 <p align="center">
 <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory&fname=http%3A%2F%2Fcfile6.uf.tistory.com%2Fimage%2F235E853E569870EA358109" width="700px">
@@ -1493,9 +1546,9 @@ SVG는 벡터를 기반으로 점, 선 등을 그린다.
 벡터Vector 방식은 비트맵과는 반대로 표현되는 그래픽의 형태shape들이 수학적 공식으로 이루어져 있습니다. 다시말해 벡터 방식의 그래픽은 고정된 비트맵을 가지고 있는 것이 아니라, 수학적 공식으로 이루어진 오브젝트들이 그때그때 디스플레이에 비트맵화 되어 스크린에 표시됩니다. 여기에서 좀 더 높은 퀄리티의 이미지를 만들기 위해 안티-앨리어싱anti-aliasing이라는 기술이 사용됩니다.
 
 이와 상반되는 것이  비트맵Bitmap입니다. 비트맵은 ‘비트의 지도map of bits‘란 듯으로, 각 픽셀에 저장된 일련의 비트 정보 집합입니다. 
-활용할 때는 <object>요소는 HTMLHTML문서 내에 직접 내장(inline)시키지 않고 SVG를 조작하는 경우에 가장 좋은 방법입니다.
+활용할 때는 `object`요소는 HTMLHTML문서 내에 직접 내장(inline)시키지 않고 SVG를 조작하는 경우에 가장 좋은 방법입니다.
 
-SVG를 최대한 활용하려면 <object>을 사용하세요. 또는 HTTP 요청을 저장하기 위해 인라인으로 사용할 수 있지만 이미지는 캐시되지 않는 문제가 있습니다. 이미지처럼 동일하게 SVG를 사용하려면 <img>또는 background-image를 사용하는 것이 좋습니다. 
+SVG를 최대한 활용하려면 `object`을 사용하세요. 또는 HTTP 요청을 저장하기 위해 인라인으로 사용할 수 있지만 이미지는 캐시되지 않는 문제가 있습니다. 이미지처럼 동일하게 SVG를 사용하려면 <img>또는 background-image를 사용하는 것이 좋습니다. 
 
 ### AMD와 CommonJS 차이
 두 가지 모두 ES2015 가 등장할 때까지 JavaScript 에 기본적으로 존재하지 않는 모듈 시스템을 구현하는 방법입니다. CommonJS 는 동기식인 반면 AMD (Asynchronous Module Definition - 비동기식 모듈 정의)는 분명히 비동기식입니다. CommonJS 는 서버-사이드 개발을 염두에 두고 설계되었으며 AMD 는 모듈의 비동기 로딩을 지원하므로 브라우저용으로 더 많이 사용됩니다.
@@ -1505,8 +1558,24 @@ AMD 은 구문이 매우 장황하고 CommonJS 은 다른 언어로 된 import �
 ES2015 모듈이 동기식 및 비동기식 로딩을 모두 지원하는 것이 반가운 것은 마침내 하나의 접근 방식만 고수할 수 있다는 점입니다. 브라우저와 노드에서 완전히 작동되지는 않았지만 언제나 트랜스파일러를 사용하여 코드를 변환할 수 있습니다.
 
 ### Vanila JS
-https://github.com/tastejs/todomvc/tree/master/examples/vanilla-es6
+순수 JavaScript, 가볍고 빠른데다가 호환성이 좋다
+프로그램세계에서는 부가기능을 제외한 기본적인 기능만 구현한상태를 부르는 어원이기도 하다 
 
+https://github.com/tastejs/todomvc/tree/master/examples/vanilla-es6
+```
+var s = document.getElementById('thing').style;
+s.opacity = 1;
+(function fade(){(s.opacity-=.1)<0?s.display="none":setTimeout(fade,40)})();
+```
+```
+var r = new XMLHttpRequest();
+r.open("POST", "path/to/api", true);
+r.onreadystatechange = function () {
+  if (r.readyState != 4 || r.status != 200) return;
+  alert("Success: " + r.responseText);
+};
+r.send("banana=yellow");
+```
 ### JavaScript 코드디버깅
   * [Chrome Devtools](https://hackernoon.com/twelve-fancy-chrome-devtools-tips-dc1e39d10d9d)
   * `debugger` statement
@@ -1830,7 +1899,7 @@ Response Header에 Set-Cookie 속성을 사용하면 클라이언트에 쿠키�
 #### 세션의 사용 예
 로그인과 같이 보안상 중요한 작업을 수행할 때 사용 
 
-#### 쿠키와 세션의 차이
+#### 차이
 쿠키와 세션은 비슷한 역할을 하며, 동작원리도 비슷합니다
 그 이유는 세션도 결국 쿠키를 사용하기 때문입니다.
 그런데 가장 큰 차이점은 사용자의 기록 정보가 저장되는 위치입니다.
@@ -1948,3 +2017,20 @@ event prevent에 관한 함수 정리
 | stopImmediatePropagation | Yes | No | Yes | 
 
 ### Git
+git 은 형상관리 툴이라고 보면 되는데 말그대로 프로젝트의 시작과 끝, 개발과 배포를 담당하는 녀석입니다.
+독립적으로 이 프로젝트를 a방향으로 나아가게 한다음에 pull request라는 것을 보내서 승인이 되면 프로젝트에 a방향이 더해지거나 그쪽으로 방향이 틀어지게 됩니다  독립적이니까 프로그램의 자유성도 보장된다. 그리고 유연성있게 프로젝트를 진행할 수 있으며 브랜치라는 가지를 이용해서 각각 하고 싶은 주제를 기반으로 코드를 발전시켜서 이 주제는 이런 브랜치로 이렇게 수정되었구나라는 것을 쉽게 알 수 있으며 각각의 브랜치마다의 모든 코드를 저장하는것이 아닌 다른 부분들만 저장해서 공간을 차지하는 것도 낮습니다.
+우리가 항상 버전이라는 것을 관리한다고 하는데 버전은 이전상태와 다른 특정한 형태를 지칭하며 git은 이 다른 부분만 저장해서 저장 효율도 높였습니다.  
+
+git은 각 커밋내용에 기반한 ID로 체크섬을 구현합니다.
+ - 체크섬은 전송된 데이터확인에 쓰이는 일종의 디지털 지문입니다. 그래서 정확한 데이터를 보존할 수 있습니다.
+
+#### Git 명령어
+ - `git add` : git이라는 녀석에 내가 설정한 파일을 관리하라는 뜻으로 수정/추가/삭제한 파일들의 목록들의 스냅샷을 찍어 기록에 올립니다. 
+ - `git commit ` : add의 다음 단계이자 확정된 수정본을 뜻합니다.  
+ - `git clone [url] [저장되는폴더명]` : 다른사람의 repository를 가져와서 저장합니다.  
+ - `git checkout -b kundol` : kundol 이라는 브랜치를 만들고 그 브랜치로 이동합니다. 
+ - `git push origin master` : origin은 git으로 호스팅하는 하나의 공유사본을 뜻합니다. 바꿀 수 있지만 보통 origin으로 사용됩니다. 
+ - ​`git pull origin master` : 작업하는 브랜치를 최신 master의 내용으로 바꿉니다.  
+ - `git log --pretty=oneline` : git에 대한 로그 확인할 수 있습니다. 
+ - `git diff` : 병합할 때 중복되는 작업부분에 대해서 차이점을 잘 말해줍니다. 
+ - `git commit --amend` : commit할 때 메세지를 정했는데 맘에 안들 때가 있습니다. 이를 통해 수정할 수 있습니다. 실행시키면 vi편집기가 뜹니다. a 를 눌러서 insert모드로 바꾸고 마지막에 esc를 누른 후 wq를 눌러 저장시켜 줍니다. 
