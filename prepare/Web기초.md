@@ -1134,7 +1134,7 @@ CSS 의 `z-index`속성은 요소의 겹치는 요소의 순서를 제어합니�
 쌓임 맥락(stacking context)은 레이어 집합을 포함하는 요소입니다. 쌓임 맥락(stacking context) 지역 내에서 자식의 `z-index` 값은 문서 루트가 아닌 해당 요소를 기준으로 설정됩니다. 해당 컨텍스트 외부의 레이어 — 즉 로컬 쌓임 맥락의 형제 요소 — 그 사이의 레이어에 어울릴 수 없습니다. 요소 B 가 요소 A 의 상단에 위치하는 경우, 요소 A 의 하위 요소 C 는 요소 C 가 요소 B 보다 `z-index`가 더 높은 경우에도 요소 B 보다 높을 수 없습니다.
 
 각각의 쌓임 맥락은 자체적으로 포함되어 있습니다 - 요소의 내용이 쌓인 후에는 전체 요소를 쌓임 맥락의 쌓인 순서로 고려합니다. 소수의 CSS 속성이 `opacity`가 1 보다 작고 `filter`가 `none`이 아니며 `transform`이 `none`이 아닌 새롭게 쌓임 맥락(stacking context)을 트리거합니다.
-
+https://tiffanybbrown.com/2015/09/css-stacking-contexts-wtf/index.html
 
 ### `inline` 과 `inline-block` 그리고  `block` 
 
@@ -1258,23 +1258,23 @@ Web환경에서 HOLB는 실제로 두 종류가 존재한다.
 HTTP/1.1의 connection당 하나의 요청처리를 개선할 수 있는 기법중 pipelining이 존재하는데 이것은 하나의 Connection을 통해서 다수개의 파일을 요청/응답 받을 수 있는 기법을 말하는데 이 기법을 통해서 어느정도의 성능 향상을 꾀 할 수 있으나 큰 문제점이 하나 있다.
 
 하나의 TCP연결에서 3개의 이미지(a.png, b.png, c.png)를 얻을려고 하는경우 HTTP의 요청순서는 다음 그림과 같다.
-
+```
 | --- a.png --- |
 
             | --- b.png --- |
 
 
                         | --- c.png --- |
-
+```
 순서대로 첫번째 이미지를 요청하고 응답받고 다음 이미지를 요청하게 되는데 만약 첫번째 이미지를 요청하고 응답이 지연되면 아래 그림과 같이 두,세번째 이미지는 당연히 첫번째 이미지의 응답처리가 완료되기 전까지 대기하게 되며 이와 같은 현상을 HTTP의 Head of Line Blocking 이라 부르며 파이프 라이닝의 큰 문제점 중 하나이다.
-
+```
 | ------------------------------- a.png --------------- --- |
 
                                                        | -b.png- |
 
 
                                                                | --c.png-- |
-
+```
 
  - RTT( Round Trip Time ) 증가
 앞서 말한것처럼 http/1.1의 경우 일반적으로 하나의 connection에 하나의 요청을 처리 한다.  이렇다 보니 매 요청별로 connection을 만들게 되고 TCP상에서 동작하는 HTTP의 특성상 3-way Handshake 가 반복적으로 일어나고 또한 불필요한 RTT증가와 네트워크 지연을 초래하여 성능을 저하 시키게 된다.
@@ -1392,11 +1392,11 @@ HTML >> DOM토큰(이 과정을 HTML파싱) >> DOM트리 >> CSS규칙(파싱된 
 <p align="center">
   <img src="https://github.com/wnghdcjfe/happyKundol/blob/master/prepare/img/vSync.png" width="700">
 </p> 
-
-테스트
 <p align="center">
-  <img src="./img/vSync2.png" width="700">
+  <img src="https://github.com/wnghdcjfe/happyKundol/blob/master/prepare/img/vsync process.png" width="700">
 </p> 
+테스트
+![vSync이미지](./img/vSync2.png) 
 
 자연스럽게 화면을 바꿀 수 있는 타이밍을 뜻합니다. 
 
