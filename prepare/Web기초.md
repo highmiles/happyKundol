@@ -1396,7 +1396,7 @@ HTML >> DOM토큰(이 과정을 HTML파싱) >> DOM트리 >> CSS규칙(파싱된 
   <img src="https://github.com/wnghdcjfe/happyKundol/blob/master/prepare/img/vsync process.png" width="700">
 </p> 
 테스트
-![vSync이미지](img/vSync2.png) 
+![ww](img/vSync2.png) 
 
 자연스럽게 화면을 바꿀 수 있는 타이밍을 뜻합니다. 
 
