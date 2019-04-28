@@ -221,13 +221,14 @@ httpRequest.send();
 ```
 
 readyState정리 
+
 | 상태코드 | 상태 | 설명 | 
-|:--------|:--------|:--------|:--------|
-|0	|UNSENT	|Client has been created. open() not called yet.|
-|1	|OPENED	|open() has been called.|
-|2	|HEADERS_RECEIVED	|send() has been called, and headers and status are available.|
-|3	|LOADING	|Downloading; responseText holds partial data.|
-|4	|DONE	|The operation is complete. |
+|:--------|:--------|:--------|
+| 0	| UNSENT	| Client has been created. open() not called yet.|
+| 1	| OPENED	| open() has been called.|
+| 2	| HEADERS_RECEIVED	| send() has been called, and headers and status are available.|
+| 3	| LOADING	| Downloading; responseText holds partial data.|
+| 4	| DONE	| The operation is complete. |
 
 HTTP라이브러리 중 좋은 것은 fetch와 axios입니다. Promise가 리턴됩니다.
 공통적으로 미지원 브라우저에 따라 pollyfill을 사용해야 하는 것은 동일합니다.
@@ -715,7 +716,8 @@ ES6는 위에 처럼 함수래벨 스코프에서 일어나는 현상들을 방�
 
 <p align="center">
   <img src="https://poiemaweb.com/img/let-lifecycle.png" width="700">
-</p>  
+</p>   
+
 let 키워드로 선언된 변수는 선언 단계와 초기화 단계가 분리되어 진행된다. 즉, 스코프에 변수를 등록(선언단계)하지만 초기화 단계는 변수 선언문에 도달했을 때 이루어진다. 초기화 이전에 변수에 접근하려고 하면 참조 에러(ReferenceError)가 발생한다. 이는 변수가 아직 초기화되지 않았기 때문이다. 다시 말하면 변수를 위한 메모리 공간이 아직 확보되지 않았기 때문이다. 따라서 스코프의 시작 지점부터 초기화 시작 지점까지는 변수를 참조할 수 없다. 스코프의 시작 지점부터 초기화 시작 지점까지의 구간을 ‘일시적 사각지대(Temporal Dead Zone; TDZ)’라고 부른다.
 
 ### 클로저
@@ -1361,7 +1363,7 @@ HTTP/1.x의 경우 두개의 요청 Header에 중복값이 존재해도 그냥 �
  - 리플로우 / 리페인트 최소화 
 #### 과정
 <p align="center">
-  <img src="https://github.com/wnghdcjfe/happyKundol/blob/master/prepare/img/1.png" width="700">
+  <img src="https://raw.githubusercontent.com/wnghdcjfe/happyKundol/master/prepare/img/1.png" width="700">
 </p>  
 HTML >> DOM토큰(이 과정을 HTML파싱) >> DOM트리 >> CSS규칙(파싱된 CSS결과인 CSSOM)에 따라 Render트리생성(display:none제거 / font-size 등 상속 스타일 부모에만 위치하게설계) >> Layout설정(좌표 설정, 보통 부모를 기준으로 설정됨 / Global Layout이 변경될 때는 브라우저의 사이즈가 증가 하거나 폰트사이즈를 증가시키면 변경된다. ) >> paint(한 픽셀 한 픽셀 인쇄하는 듯 칠해지게 된다. )
 
@@ -1373,10 +1375,10 @@ HTML >> DOM토큰(이 과정을 HTML파싱) >> DOM트리 >> CSS규칙(파싱된 
 
 예전 브라우저는 이 모든 과정을 메인쓰레드 즉, 싱글코어밖에 사용하지 못하는 구조이였지만 최신브라우저는 이를 분할했습니다. 
 <p align="center">
-  <img src="https://github.com/wnghdcjfe/happyKundol/blob/master/prepare/img/browser.png" width="700">
+  <img src="https://raw.githubusercontent.com/wnghdcjfe/happyKundol/master/prepare/img/browser.png" width="700">
 </p> 
 <p align="center">
-  <img src="https://github.com/wnghdcjfe/happyKundol/blob/master/prepare/img/multi thread.png" width="700">
+  <img src="https://raw.githubusercontent.com/wnghdcjfe/happyKundol/master/prepare/img/multi thread.png" width="700">
 </p>   
  - Compositor Thread : scrolling, animation, zoomIn/ out : 단독으로 호출 가능
  - Raster Thread : draw line을 직접 수행한다. 
@@ -1390,13 +1392,14 @@ HTML >> DOM토큰(이 과정을 HTML파싱) >> DOM트리 >> CSS규칙(파싱된 
 
 #### vSync
 <p align="center">
-  <img src="https://github.com/wnghdcjfe/happyKundol/blob/master/prepare/img/vSync.png" width="700">
+  <img src="https://raw.githubusercontent.com/wnghdcjfe/happyKundol/master/prepare/img/vSync.png" width="700">
 </p> 
 <p align="center">
-  <img src="https://github.com/wnghdcjfe/happyKundol/blob/master/prepare/img/vsync process.png" width="700">
-</p> 
-테스트
-![ww](img/vSync2.png) 
+  <img src="https://raw.githubusercontent.com/wnghdcjfe/happyKundol/master/prepare/img/vsync process.png" width="700">
+</p>  
+<p align="center">
+  <img src="https://raw.githubusercontent.com/wnghdcjfe/happyKundol/master/prepare/img/vSync2.png" width="700">
+</p>  
 
 자연스럽게 화면을 바꿀 수 있는 타이밍을 뜻합니다. 
 
@@ -1778,14 +1781,13 @@ Redis는 데이터베이스의 여러 솔루션 중 하나로 메모리를 사�
 대용량INSERT에 대한 요건이 커지면서 NOSQL DBMS가 도입 시작되었고 방대한 양의 데이터를 충분히 빠른 속도로 처리할 수 있는 데이터베이스입니다. 
 먼저 NoSQL, Not Only SQL이며 관계형 DB가 아닌 유동적인 DB라는 특징이 있습니다. 
 NoSQL은 데이터의 일관성을 약간 포기한 대신 여러 대의 컴퓨터에 데이터를 분산하여 저장하는 것(Scale-out : 수평적 확장)을 목표로 등장하였습니다. NoSQL의 등장으로 작고 값싼 장비 여러 대로 대량의 데이터와 컴퓨팅 부하를 처리하는 것이 가능하게 되었고 유연성, 확장성 등이 RDBMS에 비해 좋습니다. 
- 
-<p align="center">
-  <img src="https://github.com/wnghdcjfe/happyKundol/blob/master/prepare/img/db.jpg" width="700">
+<p align="center"> 
+  <img src="https://raw.githubusercontent.com/wnghdcjfe/happyKundol/master/prepare/img/db.jpg" width="700">
 </p> 
 스토리지엔진 : 디스크에서 데이터를 어떻게 가져오고 어떻게 최적으로 저장할 것인지 결정하는 부분이 스토리지 엔진이다
 
 <p align="center">
-  <img src="https://github.com/wnghdcjfe/happyKundol/blob/master/prepare/img/2.png" width="700">
+  <img src="https://raw.githubusercontent.com/wnghdcjfe/happyKundol/master/prepare/img/2.png" width="700">
 </p>
 
 서버안에 MongoDB자체가 전체 메모리의 메모리 버퍼를 전체의 50%를 씁니다. 떄문에 한 서버안에 프라이머리 / 세컨더리 두개 절대 놓지 않습니다.  
