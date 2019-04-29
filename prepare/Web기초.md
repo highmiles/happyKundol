@@ -268,6 +268,15 @@ fetch('http://example.com/movies.json')
     console.log(JSON.stringify(myJson));
 });
 ```
+fetch API를 사용하면 스트림을 읽을 수 있습니다. 
+```
+// Fetch the original image
+fetch('./tortoise.png')
+// Retrieve its body as ReadableStream
+.then(response => response.body)
+.then(body => {
+  const reader = body.getReader();
+  ```
 #### Axios
 axios는 현재 가장 성공적인 HTTP 클라이언트 라이브러리 중 하나
 
@@ -328,6 +337,24 @@ await는 async안에서만 써야 하고 async는 promise의 resolved된 값을 
   const b = await Promise.resolve(1);
   const c = await new Promise(function(r){ r(2); })
 ```
+### Promise와 callback
+두 패턴 모두 Continuation Passing Style(CPS) 방식으로 Promise 패턴이 Promise 객체를 넘기는 것과 달리 Callback 패턴은 다음 할 일을 계속 Callback함수를 인자로 넘깁니다. 
+
+Callback 사용시 Client-side JavaScript에서는 비교적 로직이 적어 Callback 사용이 도움이 될 때도 있지만 business logic을 가진 Server-side 언어로 사용시 코드의 가독성을 떨어트리고, 디버그를 어렵게(hard to debug) 만듭니다. 
+
+보통 Callback Hell을 해결할 방법으로 Promise를 소개하는 경우가 많은데 엄밀히 말하면 Callback Hell을 해결할 수 없고 일부를 완화하는 것이다. Callback Hell을 완화할 수 있는 이유는 단일 인터페이스와 명확한 비동기 시점 표현, 강력한 에러 처리 메커니즘 때문이다. 하지만 이것은 Callback Hell 뿐만 아니라 비동기 처리 자체를 손쉽게 다룰 수 있도록 하는 것이므로 Callback Hell 해결하는 방법으로 여기는건 바람직하지 않다.
+앞에서 Callback을 Promise 패턴으로 중첩되지 않는 형태로 변환했는데 결국 Promise 체인을 길게 연결 한다면 외형(가독성↑)만 다를 뿐 Callback Hell 문제 해결과는 큰 차이가 없다.
+
+Promise는 미래 어느 시점이 되면 값을 채워주기로 약속한 빈 그릇이며 비동기 처리를 추상화한 추상 컨테이너이다. 즉, 통일된 인터페이스로 데이터를 전달할 수 있는 컨테이너로써 장점을 발휘하는 것이다.
+본질적으로 전통적인 Callback과 Promise 두 패턴 모두 해결하고자 하는 문제는 비동기 처리를 손쉽게 다루기 위함이다. 비동기 처리를 다루는 방법이 두 가지이지 모든 경우 Promise로 프로그래밍을 할 수 있다고 생각하면 안 된다. 이벤트 리스너, Stream 처럼 정기적, 지속적으로 비동기 처리가 필요한 경우 Promise를 사용하면 오히려 이상적인 결과를 얻을 수 없고 강력한 에러 처리 메커니즘이 독이 되는 경우가 발생한다.
+stream한 경우에는 callback말고도 fetchAPI를 사용하면 됩니다.  
+
+Promise는 비동기적으로 대기(Pending) / 성공(Fulfilled, resolve) / 실패(Rejected, reject)를 다루는 값입니다. ES6+에서는 Promise와 관련하여 `new Promise, then, catch, race, Promise.all, Promise.resolve, Project.reject` 등을 지원합니다. Promise는 보통 소개된 것보다 훨씬 많은 가능성을 지닌 값이며, 자바스크립트에서의 동시성/비동기 프로그래밍을 지탱하는 기반입니다. ES6+에서는 */yield, async/await와 함께 사용될 수 있습니다.
+
+자바스크립트에서 비동기 프로그래밍은 매우 중요하며, bluebird, js-csp, co, RxJS 등의 다양한 비동기 해법들이 제시되고 있습니다.  
+
+#### Promise 예[나중에]
+
 ### 자바스크립트 이벤트 루프 등 비동기 함수 과정
 비동기함수 : WebAPIs 의 함수(DOM, Timer, Ajax)들을 쓰게 되면 브라우저 내 WebAPIs 백그라운드공간내에서 실행해다 완료가 되는 순서대로 queue에 쌓이고 그 후 이벤트 루프를 통해서 콜스택에 올라가 실행이 됩니다. 
 
@@ -502,20 +529,7 @@ pushState의 예
   }, false);
 ```
 
-### Promise와 callback
-두 패턴 모두 Continuation Passing Style(CPS) 방식으로 Promise 패턴이 Promise 객체를 넘기는 것과 달리 Callback 패턴은 다음 할 일을 계속 Callback함수를 인자로 넘깁니다. 
-
-Callback 사용시 Client-side JavaScript에서는 비교적 로직이 적어 Callback 사용이 도움이 될 때도 있지만 business logic을 가진 Server-side 언어로 사용시 코드의 가독성을 떨어트리고, 디버그를 어렵게(hard to debug) 만듭니다. 
-
-보통 Callback Hell을 해결할 방법으로 Promise를 소개하는 경우가 많은데 엄밀히 말하면 Callback Hell을 해결할 수 없고 일부를 완화하는 것이다. Callback Hell을 완화할 수 있는 이유는 단일 인터페이스와 명확한 비동기 시점 표현, 강력한 에러 처리 메커니즘 때문이다. 하지만 이것은 Callback Hell 뿐만 아니라 비동기 처리 자체를 손쉽게 다룰 수 있도록 하는 것이므로 Callback Hell 해결하는 방법으로 여기는건 바람직하지 않다.
-앞에서 Callback을 Promise 패턴으로 중첩되지 않는 형태로 변환했는데 결국 Promise 체인을 길게 연결 한다면 외형(가독성↑)만 다를 뿐 Callback Hell 문제 해결과는 큰 차이가 없다.
-
-Promise는 미래 어느 시점이 되면 값을 채워주기로 약속한 빈 그릇이며 비동기 처리를 추상화한 추상 컨테이너이다. 즉, 통일된 인터페이스로 데이터를 전달할 수 있는 컨테이너로써 장점을 발휘하는 것이다.
-본질적으로 전통적인 Callback과 Promise 두 패턴 모두 해결하고자 하는 문제는 비동기 처리를 손쉽게 다루기 위함이다. 비동기 처리를 다루는 방법이 두 가지이지 모든 경우 Promise로 프로그래밍을 할 수 있다고 생각하면 안 된다. 이벤트 리스너, Stream 처럼 정기적, 지속적으로 비동기 처리가 필요한 경우 Promise를 사용하면 오히려 이상적인 결과를 얻을 수 없고 강력한 에러 처리 메커니즘이 독이 되는 경우가 발생한다.
-
-Promise는 비동기적으로 대기(Pending) / 성공(Fulfilled, resolve) / 실패(Rejected, reject)를 다루는 값입니다. ES6+에서는 Promise와 관련하여 `new Promise, then, catch, race, Promise.all, Promise.resolve, Project.reject` 등을 지원합니다. Promise는 보통 소개된 것보다 훨씬 많은 가능성을 지닌 값이며, 자바스크립트에서의 동시성/비동기 프로그래밍을 지탱하는 기반입니다. ES6+에서는 */yield, async/await와 함께 사용될 수 있습니다.
-
-자바스크립트에서 비동기 프로그래밍은 매우 중요하며, bluebird, js-csp, co, RxJS 등의 다양한 비동기 해법들이 제시되고 있습니다. 
+ 
 
 ### 불변객체
 Javascript의 원시 타입(primitive data type)은 변경 불가능한 값(immutable value)입니다. 
@@ -1983,6 +1997,8 @@ function f(list, length) {
 }
 f([1, 2, 3], 3);
 ```
+좀 더 추가[나중에]
+
 ### docker 
 https://subicura.com/2017/01/19/docker-guide-for-beginners-1.html
 
@@ -2195,3 +2211,16 @@ git은 각 커밋내용에 기반한 ID로 체크섬을 구현합니다.
  - `git log --pretty=oneline` : git에 대한 로그 확인할 수 있습니다. 
  - `git diff` : 병합할 때 중복되는 작업부분에 대해서 차이점을 잘 말해줍니다. 
  - `git commit --amend` : commit할 때 메세지를 정했는데 맘에 안들 때가 있습니다. 이를 통해 수정할 수 있습니다. 실행시키면 vi편집기가 뜹니다. a 를 눌러서 insert모드로 바꾸고 마지막에 esc를 누른 후 wq를 눌러 저장시켜 줍니다. 
+
+### 블록체인
+
+### BigO
+온라인 전송, 파일 크기에 따라 전송시간이 증가
+오프라인 전송(비행기), 상수시간으로 일정
+파일크기 즉, 입력시간에 따라 얼마나 많은 시간이 걸리느냐를 나타내는 것. 
+지배적이지 않은 항 무시, 상수항 무시
+재귀함수는 분기 ^ 깊이가 된다. 
+
+### polling, socket.io
+polling : 서버에 결과를 주기적으로 요청하는 것.   
+polling은 실시간 연동은 되지 않음. 이를 위해 웹소켓으로 실시간 연동, 웹소켓을 쉽게 사용할 수 있게 해주는 모듈을 socket.io
