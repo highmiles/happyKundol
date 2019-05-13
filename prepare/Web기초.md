@@ -133,16 +133,20 @@
 [RTT설명링크](https://m.blog.naver.com/PostView.nhn?blogId=goduck2&logNo=220076011565&proxyReferer=https%3A%2F%2Fwww.google.com%2F)
 ### TCP / IP
 UDP는 데이터가 버려지는 거를 상관하지 않지만, TCP는 수신측에서 데이터가 버려진 걸 발견하면, 다시 보내 달라고 요청을 합니다. 그렇게 유실이 발생하더라도 TCP는 재전송을 해서 데이터가 빠짐없이 모두 안전하게 받아지게 됩니다. 그래서 TCP를 신뢰성이 있는 전송 기법이라고 부릅니다.
-이런 패킷 드랍 때문에 그만큼 속도가 느려지게 됩니다. 
-Three handShake에 의해 SYN(동기화, 연결요청 플래그)를 보내고 ACK(응답 플래그)
+Three handShake에 의해 SYN(동기화, 연결요청 플래그)를 보내고 ACK(응답 플래그)받아서 신뢰성을 얻습니다.  
+종료
+[!종료](https://postfiles.pstatic.net/MjAxODEyMDNfMjU2/MDAxNTQzODA1MTEzNTI4.TW3rW8r84_6va50y5Txvu2uh0jSyTNDZp_CR0P1I0Hsg.j75O2GIC5DE3WXKJV4byP8APcLUu8Y4MMm3-6DVHJwEg.PNG.jhc9639/1280px-TCP_CLOSE.svg.png?type=w966)
 
 한번에 윈도우사이즈만큼 보낼 수 있으며 최대의 윈도우사이즈는 보통 65,535 바이트이지만 조정할 수 있다. 송신측에서 관리합니다. 
 3핸드쉐이크 이후 데이타를 주고 받을 때도 ACK는 데이터를 상대측에서 정상수신 확인을 위해서 보내고 받습니다. 
-
+ - 실제로는 65535바이트가 아닌 1) MSS로 세분화 및 2)TCP, IP 헤더(각각 20바이트)를 제거하기 때문에 최대 세그먼트는 536byte 또는 1220byte이다. 
  - 최대 처리량 : 기본 TCP 창 / RTT
  - RTT : TCP 클라이언트 패킷이 서버에 응답하는 데 걸리는 시간 
  - TCP 와 IP 기반에서 만들어지고 둘이 함께 같이 많이 쓰인다라고 해서 TCP/ IP
- - A / T / I / N / P
+ - A / T / I / N / P 
+ - Internet : 페킷 수신 상태 주소지정
+ - Transfort : TCP는 연결지향 / UDP는 비연결지향
+
 
 A는 Appilcation / Presentation / Session으로 나눠진다(OCI)
  - A : 네트쿼크를 통해 이루고자 하는 여러가지 작업을 실제로 수행하는 곳
@@ -217,7 +221,20 @@ node.js에서는 npm을 다운받아 `res.setHeader('ETag', etag(body))`이렇�
 
 이외에도 Layered System이 있습니다. 
 #### Layered System
-A client cannot ordinarily tell whether it is connected directly to the end server, or to an intermediary along the way. Intermediary servers may improve system scalability by enabling load-balancing and by providing shared caches. Layers may also enforce security policies.
+계층화, 다중계층(보안, 로드 밸런싱)을 통해 중간매체를 사용할 수 있다.  
+
+### 단위테스트
+ - 함수는 한가지 일만 해야 한다. 
+ - 문제점 발견을 빠르게 
+ - 단위테스틀 통한 리팩토링 가능
+ - DI를 만들어 생성자작업을 할 수 있다.
+ - Karma, jsmin, jest,mocha, 그냥 자바스크립트의 assert
+
+### UI 테스트 자동화
+ - 인터페이스 동작을 check
+ - night mare로 구현? 
+
+
  
 ### Ajax
 AJAX: Asynchronous Javascript And XML, 에이젝스라 불리는 이 것을 직역하자면, 비동기 자바스크립트 그리고 XML을 뜻합니다. 이건 어떤 특정한 단일 기술을 뜻하는 용어는 아니며 여러가지 기술집합을 의미합니다. 넓은 의미의 AJAX는 웹 클라이언트 측에서 리로드 없이 비동기적으로 콘텐츠를 변경하기 위해 사용하는 모든 기술을 지칭하며, 좁은 의미의 AJAX는 서버측과 비동기적으로 통신하는 기술을 말합니다.     
@@ -294,7 +311,7 @@ font-face로딩에도 쓰입니다. DOM API는 프라미스를 사용합니다
 `Promise<FontFace> load();`
 
 promise를 선언했을 때의 단계가 pending, 반환했을 때 then으로 넘겼을 때의 단계가 fulfilled상태라 부릅니다. 그리고 나서 성공과 실패에 따라 반환되는 값이 달라지는데 성공된 객체는 resolve메서드가 관리하고 실패한 객체는  reject메서드가 관리하여 error객체를 반환합니다.  
-```
+```js
 async1(1)
 .then(async2)
 .then(result =>{ 
@@ -309,8 +326,18 @@ then만으로는  rejected됬을 때의 애러만 받을 수 있다.
 p.then(onFulfilled[, onRejected]);
 프로미스의 기본문법입니다. then의 두번째 인자로는 rejected가 됬을 때만의 핸들러를 담고 있습니다. 
 
-그럼 어떻게 해야 할까요?
+rejected를 활용한 오류 분기점시의 로직 구현
+```js
+(resolve, reject)=>{
+  $.get(_, function(res){
+    if(res)resolve
+    else reject
+  })
+}
 ```
+
+그럼 어떻게 해야 할까요?
+```js
 async1(1)
 .then(async2)
 .then(result =>{
@@ -330,7 +357,7 @@ catch는 resolve든 reject는 모든 오류를 처리할 수 있습니다.
 
 async/await 함수를 쓰는 목적은 여러개의 promise들을 "아름답게" 사용할 수 있게 합니다.
 try catch로 애러를 잡을 수 있으며 디버깅하기가 쉬워지는 장점이 있습니다.   
-await는 async안에서만 써야 하고 async는 promise의 resolved된 값을 반환합니다.   
+`await`는 `async`안에서만 써야 하고 `async`는 `promise`의 `resolved`된 값을 반환합니다.   
 
 예제
 ```
@@ -345,7 +372,7 @@ Callback 사용시 Client-side JavaScript에서는 비교적 로직이 적어 Ca
 보통 Callback Hell을 해결할 방법으로 Promise를 소개하는 경우가 많은데 엄밀히 말하면 Callback Hell을 해결할 수 없고 일부를 완화하는 것이다. Callback Hell을 완화할 수 있는 이유는 단일 인터페이스와 명확한 비동기 시점 표현, 강력한 에러 처리 메커니즘 때문이다. 하지만 이것은 Callback Hell 뿐만 아니라 비동기 처리 자체를 손쉽게 다룰 수 있도록 하는 것이므로 Callback Hell 해결하는 방법으로 여기는건 바람직하지 않다.
 앞에서 Callback을 Promise 패턴으로 중첩되지 않는 형태로 변환했는데 결국 Promise 체인을 길게 연결 한다면 외형(가독성↑)만 다를 뿐 Callback Hell 문제 해결과는 큰 차이가 없다.
 
-Promise는 미래 어느 시점이 되면 값을 채워주기로 약속한 빈 그릇이며 비동기 처리를 추상화한 추상 컨테이너이다. 즉, 통일된 인터페이스로 데이터를 전달할 수 있는 컨테이너로써 장점을 발휘하는 것이다.
+Promise는 미래 어느 시점이 되면 값을 채워주기로 약속한 빈 그릇(퓨쳐 모나드)이며 비동기 처리를 추상화한 추상 컨테이너이다. 즉, 통일된 인터페이스로 데이터를 전달할 수 있는 컨테이너로써 장점을 발휘하는 것이다.
 본질적으로 전통적인 Callback과 Promise 두 패턴 모두 해결하고자 하는 문제는 비동기 처리를 손쉽게 다루기 위함이다. 비동기 처리를 다루는 방법이 두 가지이지 모든 경우 Promise로 프로그래밍을 할 수 있다고 생각하면 안 된다. 이벤트 리스너, Stream 처럼 정기적, 지속적으로 비동기 처리가 필요한 경우 Promise를 사용하면 오히려 이상적인 결과를 얻을 수 없고 강력한 에러 처리 메커니즘이 독이 되는 경우가 발생한다.
 stream한 경우에는 callback말고도 fetchAPI를 사용하면 됩니다.  
 
@@ -353,7 +380,10 @@ Promise는 비동기적으로 대기(Pending) / 성공(Fulfilled, resolve) / 실
 
 자바스크립트에서 비동기 프로그래밍은 매우 중요하며, bluebird, js-csp, co, RxJS 등의 다양한 비동기 해법들이 제시되고 있습니다.  
 
-#### Promise 예[나중에]
+#### Promise 예
+
+`Promise.all([delay(50), a])` 또는 `Promise.rase([delay(50), a])`로 동시성프로그래밍
+애러처리로 `eror.then().catch()`
 
 ### 자바스크립트 이벤트 루프 등 비동기 함수 과정
 비동기함수 : WebAPIs 의 함수(DOM, Timer, Ajax)들을 쓰게 되면 브라우저 내 WebAPIs 백그라운드공간내에서 실행해다 완료가 되는 순서대로 queue에 쌓이고 그 후 이벤트 루프를 통해서 콜스택에 올라가 실행이 됩니다. 
@@ -370,7 +400,7 @@ ES6의 화살표 함수는 서브루틴을 정의할 때 일반 함수를 사용
 하지만 생성자 함수는 클래스 정의로 대체 / 서브루틴은 화살표 함수로 대체 / 메소드는 메소드 정의로 대체 할 수 있다.
 
 활용 예)
-```
+```js
 // 파라미터를 입력받아 로직 수행
 (param1, param2, .... paramN) => { statements }
  
@@ -389,7 +419,9 @@ param1 => { statement }
 하지만 이미 언급한 대로, 화살표 함수는 자기 자신의 this가 바인드되지 않도록 설계되어 있습니다. 즉, 함수의 실행 맥락(어떻게 호출되었는가.)과 무관하게, 함수가 정의되는 **lexical scope**에서의 this가 this로서 적용됩니다. 즉, 위의 예제는 다음과 같이 변경될 수 있습니다.    
  - Lexical this : 화살표 함수는 함수를 선언할 때 this에 바인딩할 객체가 정적으로 결정된다. 동적으로 결정되는 일반 함수(자신을 호출하는 객체를 가리킴)와는 달리 화살표 함수의 this 언제나 상위 스코프의 this를 가리킨다. 
 
-```
+ > scope : 어디에 선언되었느냐에 따라 유효한 범위를 가지는 것. 참조대상 식별자. 
+
+```js
 function Person(){
   this.age = 0;
  
@@ -401,7 +433,18 @@ function Person(){
  
 var p = new Person();
 ``` 
-
+### 개발보안
+ - 개발시에만 cors
+ - csrf 토큰
+ - xss 정규표현식 필터링
+ - 서버의 directory 직접적 접근 못하게 하는 directory 설정
+ - 사용자 이용 조회
+ - 주기적인 정적 분석
+ - command, SQL Injection 
+ - 사용자 개인정보는 단방향 암호화 bcrypt로
+ - 파일 업로드시 확장자 제한 및 용량 제한
+ - 안전하지 않은 요청은 redirect로 보호
+ - http 헤더 설정 1) x-frame-options, 2) x-xss-protection 3) x-content-options 4) content-security-policy 를 설정(helmet을 통해 쉽게 설정)
 ### SPA
 단일 페이지 애플리케이션(Single Page Application, SPA)는 모던 웹의 패러다임이다. SPA는 기본적으로 단일 페이지로 구성되며 기존의 서버 사이드 렌더링과 비교할 때, 배포가 간단하며 네이티브 앱과 유사한 사용자 경험을 제공할 수 있다는 장점이 있다.
 link tag를 사용하는 전통적인 웹 방식은 새로운 페이지 요청 시마다 정적 리소스가 다운로드되고 전체 페이지를 다시 렌더링하는 방식을 사용하므로 새로고침이 발생되어 사용성이 좋지 않다. 그리고 변경이 필요없는 부분를 포함하여 전체 페이지를 갱신하므로 비효율적이다.
@@ -411,8 +454,21 @@ SPA는 기본적으로 웹 애플리케이션에 필요한 모든 정적 리소�
 단점
 > 초기 구동 속도, SPA는 웹 애플리케이션에 필요한 모든 정적 리소스를 최초에 한번 다운로드하기 때문에 초기 구동 속도가 상대적으로 느리다. 하지만 SPA는 웹페이지보다는 애플리케이션에 적합한 기술이므로 트래픽의 감소와 속도, 사용성, 반응성의 향상 등의 장점을 생각한다면 결정적인 단점이라고 할 수는 없다.
 
-> SEO(검색엔진 최적화) 문제, SPA는 서버 렌더링 방식이 아닌 자바스크립트 기반 비동기 모델(클라이언트 렌더링 방식)이다. 따라서 SEO는 언제나 단점으로 부각되어 왔던 이슈이다. 하지만 SPA는 정보의 제공을 위한 웹페이지보다는 애플리케이션에 적합한 기술이므로 SEO 이슈는 심각한 문제로 볼 수 없다. Angular 또는 React 등의 SPA 프레임워크는 서버 렌더링을 지원하는 SEO 대응 기술이 이미 존재하고 있어 SEO 대응이 필요한 페이지에 대해서는 선별적 SEO 대응이 가능하다. 즉, `Server side rendering`를 이용하면 해결된다.
+> SEO(검색엔진 최적화) 문제, SPA는 서버 렌더링 방식이 아닌 자바스크립트 기반 비동기 모델(클라이언트 렌더링 방식)이다. 따라서 SEO는 언제나 단점으로 부각되어 왔던 이슈이다. 하지만 SPA는 정보의 제공을 위한 웹페이지보다는 애플리케이션에 적합한 기술이므로 SEO 이슈는 심각한 문제로 볼 수 없다. Angular 또는 React 등의 SPA 프레임워크는 서버 렌더링을 지원하는 SEO 대응 기술이 이미 존재하고 있어 SEO 대응이 필요한 페이지에 대해서는 선별적 SEO 대응이 가능하다. 즉, `Server side rendering`(SPA를 개발하는 것처럼 개발하고 배포는 서버사이드 랜더링 처럼 하는 것)를 이용하면 해결된다.
 
+
+### URI, URL
+ - Uniform Resource Indentifier 자원식별자, 주소 전체 
+ - Uniform Resource Locator 자원위치 : 주소의 특정 파일 부분
+
+### 프로토타입
+ - 프로토타입 링크
+ - 프로토타입 오브젝트
+객체는 함수를 통해 생성하고 이는 `__proto__`속성을 통해 프로타입체이닝을 통해 상위 프로토타입에 접근 가능
+
+### rest, spread 연산자 차이
+ - spread는 맞는 이터러블 객체에 맞게 확장
+ - rest는 함수 인자로
 #### 라우팅
 라우팅이란 출발지에서 목적지까지의 경로를 결정하는 기능이다. 애플리케이션의 라우팅은 사용자가 태스크를 수행하기 위해 어떤 화면(view)에서 다른 화면으로 화면을 전환하는 내비게이션을 관리하기 위한 기능을 의미한다. 일반적으로 사용자자 요청한 URL 또는 이벤트를 해석하고 새로운 페이지로 전환하기 위한 데이터를 취득하기 위해 서버에 필요 데이터를 요청하고 화면을 전환하는 위한 일련의 행위를 말한다.
 
@@ -760,9 +816,13 @@ let 키워드로 선언된 변수는 선언 단계와 초기화 단계가 분리
   <img src="https://poiemaweb.com/img/closure.png" width="700">
 </p>     
 
+외부함수의 실행컨텍스트가 소멸해도 `[[scope]]`프로퍼티가 가리키는 외부함수의 실행환경은 소멸하지 않고 참조할 수 있는 것
+
 스코프는 함수를 호출할 때가 아니라 함수를 어디에 선언하였는지에 따라 결정됩니다.즉,"렉시컬한 환경"으로 설정이 됩니다. 
 이 때문에 함수가 다른 함수 내부에서 정의되었을 때 내부함수는 외부함수의 변수에 접근 가능하지만 외부함수는 내부함수의 변수에 접근 불가한 "렉시컬 스코핑"이 발생되게 됩니다.  
  
+ > 스코프 : 어떤 변수들이 접근할 수 있는지에 대한 정의 
+
 클로저는 함수와 그 함수가 선언된 렉시컬 환경의 조합이며 외부 함수가 반환된 후에도 외부 함수의 변수 범위 체인에 접근할 수 있는 함수입니다. 
 
 클로저는 각자의 환경을 가진다. 이 환경을 기억하기 위해서는 당연히 메모리가 소모될 것이다. 클로저를 생성해놓고 참조를 제거하지 않는 것은 C++에서 동적할당으로 객체를 생성해놓고 delete를 사용하지 않는 것과 비슷하다. 클로저를 통해 내부 변수를 참조하는 동안에는 내부 변수가 차지하는 메모리를 GC가 회수하지 않는다. 따라서 클로저 사용이 끝나면 참조를 제거하는 것이 좋다.
@@ -1459,6 +1519,9 @@ HTTP/1.x의 경우 두개의 요청 Header에 중복값이 존재해도 그냥 �
 </p>  
 HTML >> DOM토큰(이 과정을 HTML파싱) >> DOM트리 >> CSS규칙(파싱된 CSS결과인 CSSOM)에 따라 Render트리생성(display:none제거 / font-size 등 상속 스타일 부모에만 위치하게설계) >> Layout설정(좌표 설정, 보통 부모를 기준으로 설정됨 / Global Layout이 변경될 때는 브라우저의 사이즈가 증가 하거나 폰트사이즈를 증가시키면 변경된다. ) >> paint(한 픽셀 한 픽셀 인쇄하는 듯 칠해지게 된다. )
 
+Render트리가 생성이 되었을 때 GPU 업로드 한 요소는 Graphic Layer로 분리가 되고 레이어 각각 비트맵으로 출력이 된다. 
+GPU업로드 요소는 CSS3D / video & canvas / filter / animation / transform : transelateZ(0)
+
  > DOM은 마크업과 1 : 1 관계를 맺습니다. 웹페이지를 자바스크립트로 제어하기 위한 객체 모델을 의미한다.
 
  > BOM은 웹브라우저의 창이나 프래임을 추상화해서 프로그래밍적으로 제어할 수 있도록 제공하는 수단이며 전역객체인 Window의 프로터티와 메소드들을 통해서 제어할 수 있습니다. 
@@ -1473,16 +1536,13 @@ url을 입력하면 네비게이션이 일어나고 네트워크 스레드가 �
 최신 브라우저는 JS > Recalc Style > Layout > Update Layer Tree > Paint > Composite 의 과정으로 화면 생성됩니다. 
 
 이 과정을 vSync 안에서 즉, 16.6ms안에 끝내야 합니다. 
+그래픽드라이버를 통해 모니터를 업데이트하는데 Appdata >> swap(back buffer >> front buffer) >> monitor를 통해 화면을 업데이트한다. 
+1 / 60초  16.6ms마다 발생하기 때문에 그 안에 모든 과정을 다 끝내야 한다.  
 
 예전 브라우저는 이 모든 과정을 메인쓰레드 즉, 싱글코어밖에 사용하지 못하는 구조이였지만 최신브라우저는 이를 분할했습니다. 
+ 
 
-<p align="center">
-  <img src="https://raw.githubusercontent.com/wnghdcjfe/happyKundol/master/prepare/img/browser.png" width="700">
-</p> 
 
-<p align="center">
-  <img src="https://raw.githubusercontent.com/wnghdcjfe/happyKundol/master/prepare/img/multi thread.png" width="700">
-</p>   
  - Compositor Thread : scrolling, animation, zoomIn/ out : 단독으로 호출 가능
  - Raster Thread : draw line을 직접 수행한다. 
  - Paint : 레이어 별로 색을 칠한다. 
@@ -1694,14 +1754,30 @@ r.send("banana=yellow");
   * `debugger` statement
   * Good old `console.log` debugging
 
+### javascript v8 저스트인타임 컴파일러
+객체 속성위치에 매번 접근하는 것은 cost가 크다. 
+hidden class 로 해결한다. 
+오프셋을 이용해서 메모리 주소로 jump를 통해 해결한다. 
+또한 같은 히든클래스는 캐싱이 된다. 어떤게 캐싱이 되는가. 
+ - 속성 변경의 순서 통일
+ - 동일 메소드의 경우
+ - 메모리누수는 원하지 않는 메모리를 사용하지 않는 것이다. 
+
+### 가비지 컬렉션
+전역 변수를 최소화 하고 DOM에서 벗어난 태그는 참조하지 말아야 한다.  
+ - 할당 > 사용 > 해제
+ - 참조를 기반으로 해제
+ - 마크스위프, root로 부터 닿을 수 있는 가 없는가를 통해 해제 
+
 ### ES6 스펙
  - 기본 매개 변수 (Default Parameters)
  - 템플릿 리터럴 (Template Literals)
  - 멀티 라인 문자열 (Multi-line Strings)
  - 비구조화 할당 (Destructuring Assignment)
+ - Promise, let, const, for of, map, set, symbols
 
 ES5에서는 구조화된 데이터를 변수로 받기 위해 아래와 같이 처리해야 했다.
-```
+```js
 // browser
 var data = $('body').data(), // data has properties house and mouse
   house = data.house,
@@ -1715,7 +1791,7 @@ var body = req.body, // body has username and password
   password = body.password
 ```
 하지만 ES6에서는 비구조화 할당을 사용해 아래와 같이 처리할 수 있다.
-```
+```js
 var {house, mouse} = $('body').data() // we'll get house and mouse variables
 
 var {jsonMiddleware} = require('body-parser')
@@ -1723,7 +1799,7 @@ var {jsonMiddleware} = require('body-parser')
 var {username, password} = req.body
 ```
 주의할 점은 var로 할당하려는 변수명과 구조화된 데이터의 property명이 같아야 한다. 또한 구조화된 데이터가 아니라 배열의 경우 {} 대신 []를 사용해서 위와 유사하게 사용할 수 있다.
-```
+```js
 var [col1, col2]  = $('.column'),
   [line1, line2, line3, , line5] = file.split('\n')
 ```
@@ -1731,7 +1807,7 @@ var [col1, col2]  = $('.column'),
  - 향상된 객체 리터럴 (Enhanced Object Literals) 
 
 ES5에서는 아래와 같이 JSON을 사용해서 객체 리터럴을 만들 수 있었다.
-```
+```js
 var serviceBase = {port: 3000, url: 'azat.co'},
     getAccounts = function(){return [1,2,3]}
 
@@ -1830,6 +1906,7 @@ for (const val of arrayLike) log(val);
 
 ### 함수형 프로그래밍 
 
+다향성, 어떠한 인자든 가능한 것을 말한다. 
 부수효과를 방지하고 상태변이를 감소하기 위해 데이터의 제어흐름과 연산을 추상하는 것
 원하는 결과를 얻기 위한 비즈니스 로직이 담겨 있는 고수준의 연산을 일련의 단계들로 체이닝하는, 간결한 흐름 중심의 모델을 선호합니다. 
 함수의 서술부와 평가부를 분리하는 함수 합성의 미학이자 표현식이 호출 될 때까지 느긋하게 미루다가 평가하는 사상입니다. 
@@ -1870,10 +1947,12 @@ fg('{"k: 10 }').catch(_ => '미안...').then(log);
  - 이터러블/이터레이터 프로토콜: 이터러블을 for...of, 전개 연산자 등과 함께 동작하도록한 규약
 
 #### 제너레이터와 이터러블
-제너레이터는 커스텀형 이터레이터로 함수자체가 이터러블을 생성한다. 이터러블은 반복할 수 있는 순차적인 객체를 뜻한다. Es6에서는 for of로 이터러블한 객체를 쉽게 순회할 수 있으며 객체 확장연산자인 ... spread Syntax로 배열을 만들 수 있다. 
+제너레이터는 커스텀형 이터레이터로 함수자체가 이터러블을 생성한다. 이터러블은 반복할 수 있는 순차적인 객체를 뜻한다. Es6에서는 for of로 이터러블한 객체를 쉽게 순회할 수 있으며 객체 확장연산자인 ... spread Syntax로 배열을 만들 수 있다. 
+이터레이터를 손쉽게 만들어준다. 
+원리는 다음과 같다. `yield`, 스택 프레임에 복사를 하고 콜스택에서 제거를 한다. 그리고 `next`함수가 발동했을 때 스택프레임에 있는 것을 복원해서 실행시킨다. 즉, 진입점을 개발자가 원하는 데로 실행이 가능한 코루틴이 가능하다.  
 
  > ...연산자는 적용되는 공간에서의 인수들(string, 배열, key-value)에 따라 그 공간에 맞는 인수 또는 요소로 확장할 수 있게 하는 연산자이다. 
-```
+```js
 const log = a => console.log(a)
 function* gen() {
     yield 10;
@@ -2224,3 +2303,46 @@ git은 각 커밋내용에 기반한 ID로 체크섬을 구현합니다.
 ### polling, socket.io
 polling : 서버에 결과를 주기적으로 요청하는 것.   
 polling은 실시간 연동은 되지 않음. 이를 위해 웹소켓으로 실시간 연동, 웹소켓을 쉽게 사용할 수 있게 해주는 모듈을 socket.io
+
+### SDK
+javascript SDK를 통해 클라이언트가 우리의 서비스를 이용하기 쉽게 해주는 것. 
+API + API와 연관된 라이브러리를 개발
+cross origin 제한 해결
+
+webpack은 개발 환경에서만 필요하므로 `--save-dev` 옵션을 사용해서 설치 
+`npm install webpack webpack-cli --save-dev `
+
+ > Global namespace 사용 피하기
+
+JavaScript에서 다양한 라이브러리 간 이름 중복 문제가 발생하지 않도록 주의해야 한다. Global namespace에 객체가 위치하면 변수명이나 함수명이 중복되어 문제가 생길 수 있으므로 별도의 독립된 namespace에서 객체를 생성한다. 네이버페이는 Naver.Pay라는 namespace를 기준으로 함수가 제공된다
+
+ > DOM, CSS 이름 중복 피하기
+
+JavaScript SDK를 통해 HTML, CSS를 DOM에 append하는 경우, 가맹점이 기존에 사용하는 태그의 id나 class와 이름이 중복되는 경우를 주의해야 한다. 네이버페이는 class나 id가 중복되지 않도록 하기 위해 Npay_라는 prefix를 사용한다.
+
+ > 캐시 정책
+SDK 역시 다른 애플리케이션과 마찬가지로 기능 개선 및 버그 수정을 위해 변경될 수 있다. 클라이언트에서 항상 최신 버전이 사용되도록 해야 하며, 이를 위해 네이버페이 SDK 배포 서버로부터 include하여 사용할 것을 가이드한다.
+
+이때 캐시 정책이 매우 중요하다. SDK 로직에서 사용하는 서버 API 로직이 상호 밀접한 관련이 있을 수 있으므로, 변경 사항이 클라이언트에 적절히 적용이 되지 않으면 정상적인 서비스를 제공하기 어렵다.
+
+이 문제를 해결하는 방법으로는 가맹점이 timestamp를 붙이거나 네이버페이 측에서 wrapping한 환경을 만들고 내부에서 timestamp를 붙이는 방법도 있으나 웹 표준인 cache-control을 활용하는 것이 좋다.
+
+response 헤더에 cache-control을 "no-cache"로 설정하면 캐시를 허용하나 서버로 재검사 요청 후 304 응답을 받은 경우에만 캐시된 데이터를 사용한다. cache-control을 "no-store"로 설정하면 캐시를 전혀 허용하지 않고 모든 요청을 새로 한다. HTTP 캐싱에 대한 자세한 내용은 Google Developers의 HTTP 캐싱을 참고한다.
+
+. target origin에는 별표(*)를 사용할 수 있다. 하지만 이 방법은 Internet Explorer 9 이하 버전에서는 XDomainRequest 객체를 통해서만 사용할 수 있다.
+
+그래서 Internet Explorer 8 이상 버전을 지원하는 postMessage를 사용했다. postMessage는 cross origin 통신이 가능하게 하는 window 객체의 함수이다.
+
+`targetWindow .postMessage ( message , targetOrigin , [ transfer ]);  `
+```js
+window.addEventListener("message", receiveMessage, false);  
+function receiveMessage(event) {  
+        var receiveData = JSON.parse(event.data);
+        if (event.origin === receiveData.merchantOriginUrl) {
+                parent.postMessage("{'code':'Success'}", receiveData.merchantOriginUrl);
+        }
+}
+```
+
+### 웹팩
+webpack이 비동기 I/O와 다중 캐시 레벨을 사용하기 때문에 컴파일 속도가 매우 빠르다고 한다.
